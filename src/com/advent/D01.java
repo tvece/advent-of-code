@@ -23,18 +23,43 @@ public class D01 {
 		Integer firstValue = null;
 		Integer lastValue = null;
 		for (int i = 0; i < lines.size(); i++) {
-			for (int j = 0; j < lines.get(i).length(); j++) {
-				char character = lines.get(i).charAt(j);
+			String line = lines.get(i);
+			for (int j = 0; j < line.length(); j++) {
+				char character = line.charAt(j);
+				Integer value = null;
+				String subString = line.substring(j);
 				if (Character.isDigit(character)) {
-					Integer value = Character.getNumericValue(character);
+					value = Character.getNumericValue(character);
+				} else if (subString.startsWith("one")) {
+					value = 1;
+				} else if (subString.startsWith("two")) {
+					value = 2;
+				} else if (subString.startsWith("three")) {
+					value = 3;
+				} else if (subString.startsWith("four")) {
+					value = 4;
+				} else if (subString.startsWith("five")) {
+					value = 5;
+				} else if (subString.startsWith("six")) {
+					value = 6;
+				} else if (subString.startsWith("seven")) {
+					value = 7;
+				} else if (subString.startsWith("eight")) {
+					value = 8;
+				} else if (subString.startsWith("nine")) {
+					value = 9;
+				}
+
+				if (value != null) {
 					if (firstValue == null) {
 						firstValue = value;
 					} else {
 						lastValue = value;
 					}
 				}
+
 			}
-			System.out.println(firstValue + " " + lastValue);
+			System.out.println(lines.get(i) + " " + firstValue + " " + lastValue);
 			if (firstValue != null) {
 				result += (firstValue * 10);
 				if (lastValue != null) {

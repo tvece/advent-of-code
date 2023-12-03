@@ -24,10 +24,9 @@ public class D02 {
 		for (int i = 0; i < lines.size(); i++) {
 			String line = lines.get(i);
 			Game game = new Game(line, i + 1);
-			if (game.red <= 12 && game.green <= 13 && game.blue <= 14) {
-				System.out.println(line);
-				result += game.id;
-			}
+			Integer sum = (game.red * game.green * game.blue);
+			System.out.println(sum);
+			result += sum;
 		}
 
 		System.out.println(result);
