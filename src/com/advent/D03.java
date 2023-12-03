@@ -19,11 +19,11 @@ public class D03 {
 			throw new RuntimeException("Failed to read input data!", e);
 		}
 
-		Integer result = 0;
+		List<List<Integer>> resultNumbers = new ArrayList<>();
 		for(int lineIterator = 0; lineIterator < lines.size(); lineIterator++) {
 			String line = lines.get(lineIterator);
-			for(int charIterator = 0; charIterator < line.length(); charIterator++){
-				List<Integer> currentNumber = new ArrayList<>();
+			int charIterator = 0;	
+			List<Integer> currentNumber = new ArrayList<>();
 
 				boolean wasNextToSymbol = false;
 				while(charIterator < line.length()) {
@@ -33,17 +33,31 @@ public class D03 {
 							wasNextToSymbol = true;
 						}							
 						currentNumber.add(Character.getNumericValue(charString)); 
-					} else {
-						break;
+					} else {						
+						if(!currentNumber.isEmpty() && wasNextToSymbol) {
+							resultNumbers.add(new ArrayList<Integer>(currentNumber));
+						}
+						wasNextToSymbol = false;
+						if(!currentNumber.isEmpty()) {
+							currentNumber.clear();
+						}
 					}
 					charIterator++;
 				}
 				if(!currentNumber.isEmpty() && wasNextToSymbol) {
-					for (int numberIterator = 0; numberIterator<currentNumber.size(); numberIterator++) {						
-						result+= (((int)Math.pow(10, currentNumber.size()-numberIterator-1) *currentNumber.get(numberIterator)));
-					}
+					resultNumbers.add(new ArrayList<Integer>(currentNumber));
+				}
+				wasNextToSymbol = false;
+				if(!currentNumber.isEmpty()) {							
 					currentNumber.clear();
 				}
+		}
+		
+		Integer result = 0;
+		for (int i = 0; i<resultNumbers.size(); i++) {
+			List<Integer> resultNumber = resultNumbers.get(i);
+			for (int j = 0; j<resultNumber.size(); j++) {			
+				result+= (((int)Math.pow(10, resultNumber.size()-j-1) *resultNumber.get(j)));
 			}
 		}
 		System.out.println(result);
