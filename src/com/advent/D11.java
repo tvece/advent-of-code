@@ -15,7 +15,7 @@ import java.util.stream.IntStream;
 
 public class D11 {
 
-	//TODO part 1 and 2
+	// TODO improve performance (part 2 is not fast enough to print results in meaningful time - but probably works :) )
 	public static void main(String[] args) {
 		Path filePath = Paths.get("resources/D11.txt");
 		List<String> stringLines = new ArrayList<String>();
@@ -37,27 +37,60 @@ public class D11 {
 			}
 		}
 
-		List<String> expandedRows = new ArrayList<>();
+		List<String> rows = new ArrayList<>();
 		for (int row = 0; row < stringLines.size(); row++) {
 			String newRow = "";
 			for (int column = 0; column < stringLines.get(0).length(); column++) {
 				newRow += stringLines.get(row).charAt(column);
 				if (!okColumns.contains(column)) {
-					newRow += ".";
+					char[] array = new char[1000000];
+					Arrays.fill(new char[1000000], '.');
+					newRow += new String(array);
 				}
 			}
-			expandedRows.add(newRow);
+			rows.add(newRow);
 			if (!okRows.contains(row)) {
-				String expandedRow = "";
-				for (int i = 0; i < (stringLines.get(0).length() + (stringLines.get(0).length() - okRows.size())); i++) {
-					expandedRow+=".";
+				for(int i = 0; i<1000000;i++) {					
+					String expandedRow = "";
+					for (int j = 0; j < newRow.length(); j++) {
+						expandedRow += ".";
+					}
+					rows.add(expandedRow);
 				}
-				expandedRows.add(expandedRow);
 			}
 		}
-		
-		expandedRows.forEach(row->System.out.println(row));
 
+		//rows.forEach(row -> System.out.println(row));
+		List<int[]> galaxies = new ArrayList<>();
+		for (int row = 0; row < rows.size(); row++) {
+			for (int column = 0; column < rows.get(0).length(); column++) {
+				if (rows.get(row).charAt(column) == '#') {
+					galaxies.add(new int[] { row, column });
+				}
+			}
+		}
+
+		List<int[][]> pairs = new ArrayList<int[][]>();
+		for (int[] galaxy : galaxies) {
+			for (int[] otherGalaxy : galaxies) {
+				if (galaxy != otherGalaxy && !pairs.stream()
+						.anyMatch(existingPair -> existingPair[0][0] == otherGalaxy[0]
+								&& existingPair[0][1] == otherGalaxy[1] && existingPair[1][0] == galaxy[0]
+								&& existingPair[1][1] == galaxy[1])) {
+					pairs.add(new int[][] { galaxy, otherGalaxy });
+				}
+			}
+		}
+
+		double totalDistance = 0;
+		for (int[][] pair : pairs) {
+			//System.out.println(pair[0][0] + " " + pair[0][1] + "   " + pair[1][0] + " " + pair[1][1]);
+			int distance = Math.abs(pair[0][0] - pair[1][0]) + Math.abs(pair[0][1] - pair[1][1]);
+			//System.out.println(distance);
+			//System.out.println();
+			totalDistance += distance;
+		}
+		System.out.printf("%.12f\n", totalDistance);
 	}
 
 }
