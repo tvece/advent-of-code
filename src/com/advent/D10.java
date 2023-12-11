@@ -163,7 +163,6 @@ public class D10 {
 				final int finalRow = row;
 				final int finalColumn = column;
 				if(path.stream().anyMatch(element -> element[0] == finalRow && element[1] == finalColumn)) {
-					lastCharacterPath = true;
 					if(stringLines.get(row).charAt(column) != '-') {						
 						countingEnclosed = !countingEnclosed;
 					}
@@ -174,7 +173,6 @@ public class D10 {
 							System.out.println(row + " " + column);
 						}
 					}
-					lastCharacterPath = false;
 				}
 			}
 		}
