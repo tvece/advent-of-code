@@ -7,10 +7,13 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import javax.swing.table.DefaultTableColumnModel;
 
 public class D10 {
 
-	//TODO: fix part two
+	// TODO: fix part two
 	public static void main(String[] args) {
 		Path filePath = Paths.get("resources/D10.txt");
 		List<String> stringLines = new ArrayList<String>();
@@ -154,29 +157,30 @@ public class D10 {
 		System.out.println((path.size() - 1) / 2 + "\n");
 
 		int totalEnclosed = 0;
-		for (int row = 0; row < stringLines.size(); row++) {
-			boolean countingEnclosed = false;
-			for (int column = 0; column < stringLines.get(0).length(); column++) {
-				if(row == 1 && column == 0) {
-					"".getClass();
-				}
-				final int finalRow = row;
-				final int finalColumn = column;
-				if(path.stream().anyMatch(element -> element[0] == finalRow && element[1] == finalColumn)) {
-					if(stringLines.get(row).charAt(column) != '-') {						
-						countingEnclosed = !countingEnclosed;
+		for (int row = 0; row < map.length; row++) {
+			int brackets = 0;
+			for (int column = 0; column < map[row].length; column++) {
+				char character = map[row][column];
+				if (isPath(row, column, path) && character == '|' || character == 'J' || character == 'L' || character == 'S') {
+					brackets++;
+				} else if (map[row][column] == '.') {
+					if (brackets % 2 == 1) {
+						System.out.println(row + " " + column);
+						totalEnclosed++;
 					}
-				} else {
-					if(stringLines.get(row).charAt(column) == '.') {
-						if(countingEnclosed) {
-							totalEnclosed++;
-							System.out.println(row + " " + column);
-						}
-					}
+					
 				}
 			}
 		}
 		System.out.println(totalEnclosed);
+	}
+
+	private static List<int[]> getIntervals(int row, List<int[]> path) {
+		return path.stream().filter(a -> a[0] == row).collect(Collectors.toList());
+	}
+
+	private static boolean isPath(int row, int column, List<int[]> path) {
+		return path.stream().anyMatch(element -> element[0] == row && element[1] == column);
 	}
 
 	private static boolean isInRange(int xPosition, int yPosition, char[][] map) {
