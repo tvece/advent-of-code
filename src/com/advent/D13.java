@@ -50,41 +50,63 @@ public class D13 {
 			}
 
 			Integer foundReflection = null;
-			for (int rowIndex = 0; rowIndex < rows.length - 1; rowIndex++) {
-				boolean isReflection = true;
-				int leftCheck = rowIndex;
-				for (int rightCheck = rowIndex + 1; rightCheck < rows.length
-						&& rightCheck < ((rowIndex + 1) * 2); rightCheck++) {
-					if (!Arrays.equals(rows[leftCheck], rows[rightCheck])) {
-						isReflection = false;
-						break;
+			smudgeLoop: for (int rowSmudge = 0; rowSmudge < rows.length; rowSmudge++) {
+				for (int columnSmudge = 0; columnSmudge < rows[rowSmudge].length; columnSmudge++) {
+					if (foundReflection != null) {
+						break smudgeLoop;
 					}
-					leftCheck--;
-				}
-				if (isReflection) {
-					foundReflection = rowIndex;
-					result += 100 * (foundReflection + 1);
-					break;
-				}
-			}
 
-			if (foundReflection == null) {
-				for (int columnIndex = 0; columnIndex < columns.length - 1; columnIndex++) {
-					boolean isReflection = true;
-					int leftCheck = columnIndex;
-					for (int rightCheck = columnIndex + 1; rightCheck < columns.length
-							&& rightCheck < ((columnIndex + 1) * 2); rightCheck++) {
-						if (!Arrays.equals(columns[leftCheck], columns[rightCheck])) {
-							isReflection = false;
+					rows[rowSmudge][columnSmudge] = rows[rowSmudge][columnSmudge] == '#' ? '.' : '#';
+					columns[columnSmudge][rowSmudge] = columns[columnSmudge][rowSmudge] == '#' ? '.' : '#';
+
+					for (int rowIndex = 0; rowIndex < rows.length - 1; rowIndex++) {
+						boolean isReflection = true;
+						int leftCheck = rowIndex;
+						boolean hasSmudgeRow = false;
+						for (int rightCheck = rowIndex + 1; rightCheck < rows.length
+								&& rightCheck < ((rowIndex + 1) * 2); rightCheck++) {
+							if (!Arrays.equals(rows[leftCheck], rows[rightCheck])) {
+								isReflection = false;
+								break;
+							}
+							if (!hasSmudgeRow) {
+								hasSmudgeRow = leftCheck == rowSmudge || rightCheck == rowSmudge;
+							}
+							leftCheck--;
+						}
+						if (isReflection && hasSmudgeRow) {
+							foundReflection = rowIndex;
+							result += 100 * (foundReflection + 1);
 							break;
 						}
-						leftCheck--;
 					}
-					if (isReflection) {
-						foundReflection = columnIndex;
-						result += foundReflection + 1;
-						break;
+
+					if (foundReflection == null) {
+						for (int columnIndex = 0; columnIndex < columns.length - 1; columnIndex++) {
+							boolean isReflection = true;
+							int leftCheck = columnIndex;
+							boolean hasSmudgeColumn = false;
+							for (int rightCheck = columnIndex + 1; rightCheck < columns.length
+									&& rightCheck < ((columnIndex + 1) * 2); rightCheck++) {
+								if (!Arrays.equals(columns[leftCheck], columns[rightCheck])) {
+									isReflection = false;
+									break;
+								}
+								if (!hasSmudgeColumn) {
+									hasSmudgeColumn = leftCheck == columnSmudge || rightCheck == columnSmudge;
+								}
+								leftCheck--;
+							}
+							if (isReflection && hasSmudgeColumn) {
+								foundReflection = columnIndex;
+								result += foundReflection + 1;
+								break;
+							}
+						}
 					}
+
+					rows[rowSmudge][columnSmudge] = rows[rowSmudge][columnSmudge] == '#' ? '.' : '#';
+					columns[columnSmudge][rowSmudge] = columns[columnSmudge][rowSmudge] == '#' ? '.' : '#';
 				}
 			}
 
