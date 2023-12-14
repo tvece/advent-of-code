@@ -12,7 +12,8 @@ import java.util.stream.Stream;
 
 public class D14 {
 
-	// part 2 is slow but since there is repeating pattern after some initial rotations it is possible to guess the result from that
+	// part 2 is slow but since there is repeating pattern after some initial
+	// rotations it is possible to guess the result from that
 	public static void main(String[] args) {
 		Path filePath = Paths.get("resources/D14.txt");
 		List<String> stringRows = new ArrayList<String>();
@@ -36,9 +37,9 @@ public class D14 {
 			System.out.println(i);
 			boolean nChange = north(rows);
 			boolean wChange = west(rows);
-			boolean sChange =south(rows);
+			boolean sChange = south(rows);
 			boolean eChange = east(rows);
-			if(!nChange && !eChange && !sChange && !wChange) {
+			if (!nChange && !eChange && !sChange && !wChange) {
 				break;
 			}
 			int weight = 0;
@@ -53,7 +54,7 @@ public class D14 {
 		}
 
 	}
-	
+
 	private static boolean north(char[][] rows) {
 		boolean change = false;
 		for (int currentRow = 0; currentRow < rows.length; currentRow++) {
