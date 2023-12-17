@@ -22,8 +22,7 @@ public class D05 {
 		} catch (IOException e) {
 			throw new RuntimeException("Failed to read input data!", e);
 		}
-		System.out.println(System.currentTimeMillis());
-		
+
 		List<List<Transformation>> transfomations = new ArrayList<List<Transformation>>();
 		int index = 3;
 		List<Transformation> ss = new ArrayList<>();
@@ -74,8 +73,8 @@ public class D05 {
 				}
 			}
 		}
+
 		System.out.printf("%.9f", minimum);
-		System.out.println(System.currentTimeMillis());
 
 	}
 
