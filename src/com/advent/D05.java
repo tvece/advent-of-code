@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 
 public class D05 {
 
+	//TODO: optimize performance
 	public static void main(String[] args) {
 		Path filePath = Paths.get("resources/D05.txt");
 		List<String> lines = new ArrayList<String>();
@@ -21,7 +22,8 @@ public class D05 {
 		} catch (IOException e) {
 			throw new RuntimeException("Failed to read input data!", e);
 		}
-
+		System.out.println(System.currentTimeMillis());
+		
 		List<List<Transformation>> transfomations = new ArrayList<List<Transformation>>();
 		int index = 3;
 		List<Transformation> ss = new ArrayList<>();
@@ -72,8 +74,8 @@ public class D05 {
 				}
 			}
 		}
-
 		System.out.printf("%.9f", minimum);
+		System.out.println(System.currentTimeMillis());
 
 	}
 
