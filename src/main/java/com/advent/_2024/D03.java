@@ -18,7 +18,7 @@ public class D03 {
             throw new RuntimeException("Failed to read input data!", e);
         }
 
-        double result = 0;
+        long result = 0;
 
         input = "do()" + input;
         input = input + "don't()";
@@ -31,10 +31,10 @@ public class D03 {
 
             Matcher matcher = pattern.matcher(block);
             while (matcher.find()) {
-                result += Double.parseDouble(matcher.group(1)) * Double.parseDouble(matcher.group(2));
+                result += Long.parseLong(matcher.group(1)) * Long.parseLong(matcher.group(2));
             }
         }
 
-        System.out.printf("%f", result);
+        System.out.printf("%d", result);
     }
 }

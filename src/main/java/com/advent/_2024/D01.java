@@ -27,12 +27,11 @@ public class D01 {
         Integer[] values = new Integer[firstColumn.size()];
         firstColumn.toArray(values);
 
-        double result = 0;
+        long result = 0;
         for (Integer value : values) {
-            System.out.println(value * Collections.frequency(secondColumn, value));
-            result += (value * Collections.frequency(secondColumn, value));
+            result += ((long) value * Collections.frequency(secondColumn, value));
         }
 
-        System.out.printf("%f", result);
+        System.out.printf("%d", result);
     }
 }
