@@ -11,11 +11,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-//TODO: fix part 2
 public class D07 {
     public static void main(String[] args) {
         Path filePath = Paths.get("src/main/resources/2024/D07.txt");
-        List<String> rows;
         List<Long> correctResults = new ArrayList<>();
         try (Stream<String> lines = Files.lines(filePath, StandardCharsets.UTF_8)) {
             lines.forEach(line -> {
@@ -39,7 +37,7 @@ public class D07 {
     }
 
     private static boolean isValid(long expectedValue, List<Long> values, long currentValue, int nextValueIndex) {
-        if (expectedValue == currentValue) {
+        if (nextValueIndex == values.size() && expectedValue == currentValue) {
             return true;
         }
         if (expectedValue < currentValue) {
@@ -57,7 +55,7 @@ public class D07 {
             magnitudeResolver = magnitudeResolver / 10;
         }
 
-        System.out.println("   " + currentValue + " || " + nextValue + " = " + ((currentValue * (long) Math.pow((long) 10, magnitude)) + nextValue) + "_" + magnitude);
+        //System.out.println("   " + currentValue + " || " + nextValue + " = " + ((currentValue * (long) Math.pow((long) 10, magnitude)) + nextValue) + "_" + magnitude);
 
 
         return isValid(expectedValue, values, currentValue + nextValue, nextValueIndex)
