@@ -5,9 +5,11 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 public class D09 {
-    //TODO: fix part 1
+    //TODO: part 2
     public static void main(String[] args) {
         Path filePath = Paths.get("src/main/resources/2024/D09.txt");
         String input;
@@ -16,8 +18,8 @@ public class D09 {
         } catch (IOException e) {
             throw new RuntimeException("Failed to read input data!", e);
         }
-
-        StringBuilder diskBuilder = new StringBuilder();
+        System.out.println(input.length());
+        List<Integer> disk = new ArrayList<>();
         boolean isSpace = false;
         int fileCounter = 0;
         for (char character : input.toCharArray()) {
@@ -27,25 +29,24 @@ public class D09 {
             }
             for (int i = 0; i < number; i++) {
                 if (isSpace) {
-                    diskBuilder.append(".");
+                    disk.add(null);
                 } else {
-                    diskBuilder.append(fileCounter);
+                    disk.add(fileCounter);
                 }
             }
             isSpace = !isSpace;
         }
-        char[] disk = diskBuilder.toString().toCharArray();
 
         int currentIndex = 0;
-        int stopIndex = disk.length - 1;
+        int stopIndex = disk.size() - 1;
         while (true) {
-            if (disk[currentIndex] == '.') {
+            if (disk.get(currentIndex) == null) {
                 boolean foundReplacement = false;
                 for (int replacementIndex = stopIndex; replacementIndex > currentIndex; replacementIndex--) {
-                    if (disk[replacementIndex] != '.') {
-                        char temp = disk[currentIndex];
-                        disk[currentIndex] = disk[replacementIndex];
-                        disk[replacementIndex] = temp;
+                    if (disk.get(replacementIndex) != null) {
+                        Integer temp = disk.get(currentIndex);
+                        disk.set(currentIndex, disk.get(replacementIndex));
+                        disk.set(replacementIndex, temp);
                         foundReplacement = true;
                         break;
                     }
@@ -62,11 +63,11 @@ public class D09 {
 
         long hash = 0;
         int index = 0;
-        while (disk[index] != '.') {
-            hash += ((long) index * Character.getNumericValue(disk[index]));
+        while (disk.get(index) != null) {
+            long hashPart = ((long) index * disk.get(index));
+            hash += hashPart;
             index++;
         }
-        System.out.println(disk);
         System.out.printf("%d", hash);
 
 
