@@ -94,7 +94,7 @@ public class D06 {
         }
         return new RunResult(history, uniquePositions, isLoop);
     }
-}
 
-record RunResult(List<String> history, Set<String> uniquePositions, boolean isLoop) {
+    private static record RunResult(List<String> history, Set<String> uniquePositions, boolean isLoop) {
+    }
 }
