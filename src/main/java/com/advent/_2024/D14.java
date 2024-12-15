@@ -6,10 +6,15 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Stream;
 
 public class D14 {
+    private static final int width = 101;
+    private static final int height = 103;
+
     public static void main(String[] args) {
         Path filePath = Paths.get("src/main/resources/2024/D14.txt");
         List<Robot> robots = new ArrayList<>();
@@ -25,15 +30,31 @@ public class D14 {
                 String[] stringPosition = parts[0].split(",");
                 //"-80,-45"                 ->      ["-80","-45"]
                 String[] stringVelocity = parts[1].split(",");
-                robots.add(new Robot(Integer.parseInt(stringPosition[0]), Integer.parseInt(stringPosition[1]),
-                        Integer.parseInt(stringVelocity[0]), Integer.parseInt(stringVelocity[1])));
+                robots.add(new Robot(Integer.parseInt(stringPosition[1]), Integer.parseInt(stringPosition[0]),
+                        Integer.parseInt(stringVelocity[1]), Integer.parseInt(stringVelocity[0])));
             });
         } catch (IOException e) {
             throw new RuntimeException("Failed to read input data!", e);
         }
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 10000; i++) {
+            Set<Position> robotPositions = new HashSet<>();
             for (Robot robot : robots) {
                 robot.move();
+                robotPositions.add(robot.getPosition());
+            }
+            if (i > 500) {
+                System.out.println("Run: " + (i + 1));
+                for (int column = 0; column < width; column++) {
+                    for (int row = 0; row < height; row++) {
+                        if (robotPositions.contains(new Position(column, row))) {
+                            System.out.print("X");
+                        } else {
+                            System.out.print(" ");
+                        }
+                    }
+                    System.out.println();
+                }
+                System.out.println("\n\n\n");
             }
         }
         int[] quadrants = new int[]{0, 0, 0, 0, 0,};
@@ -49,52 +70,57 @@ public class D14 {
     }
 
     private static class Robot {
-        private static final int edgeX = 101;
-        private static final int edgeY = 103;
 
-        int positionX;
-        int positionY;
-        int velocityX;
-        int velocityY;
+        int row;
+        int column;
+        int rowVelocity;
+        int columnVelocity;
 
-        Robot(int positionX, int positionY, int velocityX, int velocityY) {
-            this.positionX = positionX;
-            this.positionY = positionY;
-            this.velocityX = velocityX;
-            this.velocityY = velocityY;
+        Robot(int column, int row, int columnVelocity, int rowVelocity) {
+            this.column = column;
+            this.row = row;
+            this.columnVelocity = columnVelocity;
+            this.rowVelocity = rowVelocity;
         }
 
         public void move() {
-            positionX += velocityX;
-            if (positionX < 0) {
-                positionX = edgeX + positionX;
-            } else if (positionX >= edgeX) {
-                positionX = positionX - edgeX;
+            row += rowVelocity;
+            if (row < 0) {
+                row = width + row;
+            } else if (row >= width) {
+                row = row - width;
             }
 
-            positionY += velocityY;
-            if (positionY < 0) {
-                positionY = edgeY + positionY;
-            } else if (positionY >= edgeY) {
-                positionY = positionY - edgeY;
+            column += columnVelocity;
+            if (column < 0) {
+                column = height + column;
+            } else if (column >= height) {
+                column = column - height;
             }
         }
 
         public int getQuadrant() {
-            if (positionX < edgeX / 2) {
-                if (positionY < edgeY / 2) {
+            if (row < width / 2) {
+                if (column < height / 2) {
                     return 1;
-                } else if (positionY > edgeY / 2) {
+                } else if (column > height / 2) {
                     return 2;
                 }
-            } else if (positionX > edgeX / 2) {
-                if (positionY < edgeY / 2) {
+            } else if (row > width / 2) {
+                if (column < height / 2) {
                     return 3;
-                } else if (positionY > edgeY / 2) {
+                } else if (column > height / 2) {
                     return 4;
                 }
             }
             return 0;
         }
+
+        public Position getPosition() {
+            return new Position(column, row);
+        }
+    }
+
+    record Position(int x, int y) {
     }
 }
