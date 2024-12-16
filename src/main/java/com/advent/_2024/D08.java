@@ -8,7 +8,6 @@ import java.nio.file.Paths;
 import java.util.*;
 
 public class D08 {
-    //TODO: fix part 1
     public static void main(String[] args) {
         Path filePath = Paths.get("src/main/resources/2024/D08.txt");
         List<String> rows;
@@ -33,6 +32,8 @@ public class D08 {
             }
         }
 
+        System.out.println(toBeProcessed);
+
         Set<Location> result = new HashSet<>();
         for (Character c : toBeProcessed.keySet()) {
             List<Location> locations = toBeProcessed.get(c);
@@ -42,49 +43,48 @@ public class D08 {
                     Location locationB = locations.get(secondLocationIndex);
                     System.out.println(locationA + " | " + locationB);
 
+                    result.add(locationA);
+                    result.add(locationB);
+
                     int diffX = locationA.x - locationB.x;
                     int diffY = locationA.y - locationB.y;
-
-                    if (locationB.x > locationA.x) {
-                        diffX = -diffX;
-                    }
-
-                    if (locationB.y > locationA.y) {
-                        diffY = -diffY;
-                    }
-
-                    int currentX = locationA.x - diffX;
-                    int currentY = locationA.y - diffY;
-                    if (currentX >= 0 && currentY >= 0 &&
+                    int currentX = locationA.x + diffX;
+                    int currentY = locationA.y + diffY;
+                    while (currentX >= 0 && currentY >= 0 &&
                             currentX < rows.getFirst().length() && currentY < rows.size()) {
                         result.add(new Location(currentX, currentY));
                         System.out.println(new Location(currentX, currentY));
+                        currentX = currentX + diffX;
+                        currentY = currentY + diffY;
                     }
+                    diffX = diffX * -1;
+                    diffY = diffY * -1;
                     currentX = locationB.x + diffX;
                     currentY = locationB.y + diffY;
-                    if (currentX >= 0 && currentY >= 0 &&
+                    while (currentX >= 0 && currentY >= 0 &&
                             currentX < rows.getFirst().length() && currentY < rows.size()) {
                         result.add(new Location(currentX, currentY));
                         System.out.println(new Location(currentX, currentY));
+                        currentX = currentX + diffX;
+                        currentY = currentY + diffY;
                     }
                     System.out.println();
                 }
             }
         }
 
-        System.out.println(result);
-        System.out.println();
-
         for (int x = 0; x < rows.size(); x++) {
             for (int y = 0; y < rows.getFirst().length(); y++) {
                 if (result.contains(new Location(x, y))) {
-                    System.out.print('A');
+                    System.out.print('#');
                 } else {
                     System.out.print(rows.get(x).charAt(y));
                 }
             }
             System.out.print('\n');
         }
+
+        System.out.println(result.size());
     }
 
     record Location(int x, int y) {
