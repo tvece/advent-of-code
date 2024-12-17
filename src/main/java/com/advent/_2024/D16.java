@@ -5,11 +5,8 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.List;
-import java.util.PriorityQueue;
+import java.util.*;
 
-//TODO part 2
 public class D16 {
     public static void main(String[] args) {
         Path filePath = Paths.get("src/main/resources/2024/D16.txt");
@@ -31,10 +28,24 @@ public class D16 {
                 }
             }
         }
-        System.out.println(getShortestPath(map, startRow, startColumn));
+        List<Node> paths = getShortestPaths(map, startRow, startColumn);
+        Set<PathElement> uniquePathElements = new HashSet<>();
+        paths.forEach(path -> uniquePathElements.addAll(path.path));
+        System.out.println(uniquePathElements.size());
+        for (int i = 0; i < map.size(); i++) {
+            for (int j = 0; j < map.getFirst().length(); j++) {
+                if (uniquePathElements.contains(new PathElement(i, j))) {
+                    System.out.print("O");
+                } else {
+                    System.out.print(map.get(i).charAt(j));
+                }
+            }
+            System.out.println();
+        }
+
     }
 
-    private static int getShortestPath(List<String> map, int startRow, int startColumn) {
+    private static List<Node> getShortestPaths(List<String> map, int startRow, int startColumn) {
 
         int[][][] distances = new int[map.size()][map.getFirst().length()][4];
         for (int[][] directionCost : distances) {
@@ -44,16 +55,16 @@ public class D16 {
         }
 
         PriorityQueue<Node> pq = new PriorityQueue<>();
-        pq.add(new Node(startRow, startColumn, 0, 3));
+        pq.add(new Node(startRow, startColumn, 0, 3, new ArrayList<>()));
         distances[startRow][startColumn][3] = 0;
 
         int[] dr = {-1, 1, 0, 0};
         int[] dc = {0, 0, -1, 1};
-
+        List<Node> result = new ArrayList<>();
         while (!pq.isEmpty()) {
             Node currentNode = pq.poll();
             if (map.get(currentNode.row).charAt(currentNode.column) == 'E') {
-                return currentNode.distance;
+                result.add(currentNode);
             }
 
             for (int i = 0; i < 4; i++) {
@@ -65,20 +76,13 @@ public class D16 {
                 int turnCost = (i == currentNode.direction) ? 1 : 1001; // Cost for turning or keeping direction
                 int newDistance = currentNode.distance + turnCost;
 
-                if (newDistance < distances[nextRow][nextColumn][i]) {
+                if (newDistance <= distances[nextRow][nextColumn][i]) {
                     distances[nextRow][nextColumn][i] = newDistance;
-                    pq.add(new Node(nextRow, nextColumn, newDistance, i));
+                    pq.add(new Node(nextRow, nextColumn, newDistance, i, currentNode.path));
                 }
             }
         }
-        return Integer.MAX_VALUE;
-    }
-
-    private static int[][] getNeighbors(int rowDirection, int columnDirection) {
-        if (rowDirection != 0) {
-            return new int[][]{new int[]{0, 1}, new int[]{0, -1}};
-        }
-        return new int[][]{new int[]{1, 0}, new int[]{-1, 0}};
+        return result;
     }
 
     private static class Node implements Comparable<Node> {
@@ -86,17 +90,23 @@ public class D16 {
         int column;
         int distance;
         int direction;
+        List<PathElement> path;
 
-        Node(int row, int column, int distance, int direction) {
+        Node(int row, int column, int distance, int direction, List<PathElement> currentPath) {
             this.row = row;
             this.column = column;
             this.distance = distance;
             this.direction = direction;
+            path = new ArrayList<>(currentPath);
+            path.add(new PathElement(row, column));
         }
 
         @Override
         public int compareTo(Node other) {
             return Integer.compare(this.distance, other.distance);
         }
+    }
+
+    record PathElement(int row, int column) {
     }
 }
