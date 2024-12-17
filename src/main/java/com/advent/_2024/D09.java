@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class D09 {
-    //TODO: part 2
     public static void main(String[] args) {
         Path filePath = Paths.get("src/main/resources/2024/D09.txt");
         String input;
@@ -19,58 +18,65 @@ public class D09 {
             throw new RuntimeException("Failed to read input data!", e);
         }
         System.out.println(input.length());
-        List<Integer> disk = new ArrayList<>();
+        List<File> disk = new ArrayList<>();
         boolean isSpace = false;
         int fileCounter = 0;
         for (char character : input.toCharArray()) {
-            int number = Character.getNumericValue(character);
+            int size = Character.getNumericValue(character);
             if (isSpace) {
                 fileCounter++;
             }
-            for (int i = 0; i < number; i++) {
-                if (isSpace) {
-                    disk.add(null);
-                } else {
-                    disk.add(fileCounter);
-                }
-            }
+            disk.add(new File(size, fileCounter, isSpace));
             isSpace = !isSpace;
         }
 
-        int currentIndex = 0;
-        int stopIndex = disk.size() - 1;
-        while (true) {
-            if (disk.get(currentIndex) == null) {
-                boolean foundReplacement = false;
-                for (int replacementIndex = stopIndex; replacementIndex > currentIndex; replacementIndex--) {
-                    if (disk.get(replacementIndex) != null) {
-                        Integer temp = disk.get(currentIndex);
-                        disk.set(currentIndex, disk.get(replacementIndex));
-                        disk.set(replacementIndex, temp);
-                        foundReplacement = true;
-                        break;
+        int currentIndex = disk.size() - 1;
+        while (currentIndex >= 0) {
+            File currentFile = disk.get(currentIndex);
+            if (!currentFile.isSpace) {
+                int spaceFinder = 0;
+                while (spaceFinder < currentIndex) {
+                    File finderFile = disk.get(spaceFinder);
+                    if (finderFile.isSpace) {
+                        if (finderFile.size >= currentFile.size) {
+                            finderFile.size = finderFile.size - currentFile.size;
+                            disk.remove(currentIndex);
+                            disk.add(spaceFinder, currentFile);
+                            File newSpace = new File(currentFile.size, 0, true);
+                            disk.add(currentIndex, newSpace);
+                            break;
+                        }
                     }
-                }
-                if (!foundReplacement) {
-                    break;
-                } else {
-                    stopIndex--;
+                    spaceFinder++;
                 }
             }
-            currentIndex++;
+            currentIndex--;
         }
-
 
         long hash = 0;
         int index = 0;
-        while (disk.get(index) != null) {
-            long hashPart = ((long) index * disk.get(index));
-            hash += hashPart;
-            index++;
+        for (File file : disk) {
+            if (!file.isSpace) {
+                for (int part = 0; part < file.size; part++) {
+                    hash += ((long) (index + part) * file.fileIndex);
+                }
+            }
+            index += file.size;
         }
+
         System.out.printf("%d", hash);
+    }
 
+    private static class File {
+        int size;
+        int fileIndex;
+        boolean isSpace;
 
+        File(int size, int fileIndex, boolean isSpace) {
+            this.size = size;
+            this.fileIndex = fileIndex;
+            this.isSpace = isSpace;
+        }
     }
 
 }
