@@ -9,24 +9,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class D13 {
+
+    private static final String BUTTON_A_PREFIX = "Button A: X";
+    private static final String BUTTON_B_PREFIX = "Button B: X";
+
     public static void main(String[] args) {
         Path filePath = Paths.get("src/main/resources/2024/D13.txt");
         List<String> input;
-        List<Machine> machines = new ArrayList<>();
-        Machine readingMachine = new Machine();
         try {
             input = Files.readAllLines(filePath, StandardCharsets.UTF_8);
         } catch (IOException e) {
             throw new RuntimeException("Failed to read input data!", e);
         }
+
+        List<Machine> machines = new ArrayList<>();
+        Machine readingMachine = new Machine();
         for (String line : input) {
-            if (line.startsWith("Button A: ")) {
+            if (line.startsWith(BUTTON_A_PREFIX)) {
                 readingMachine = new Machine();
-                line = line.substring("Button A: X".length());
+                line = line.substring(BUTTON_A_PREFIX.length());
                 readingMachine.xIncrementA = Integer.parseInt(line.substring(0, line.indexOf(",")));
                 readingMachine.YIncrementA = Integer.parseInt(line.substring(line.indexOf("Y") + 1));
-            } else if (line.startsWith("Button B: ")) {
-                line = line.substring("Button B: X".length());
+            } else if (line.startsWith(BUTTON_B_PREFIX)) {
+                line = line.substring(BUTTON_B_PREFIX.length());
                 readingMachine.xIncrementB = Integer.parseInt(line.substring(0, line.indexOf(",")));
                 readingMachine.YIncrementB = Integer.parseInt(line.substring(line.indexOf("Y") + 1));
             } else if (line.startsWith("Prize: ")) {
@@ -58,6 +63,4 @@ public class D13 {
         long prizeX;
         long prizeY;
     }
-
-
 }
