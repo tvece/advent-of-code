@@ -51,14 +51,6 @@ public class D21P1 {
                     List<String> directionalOptions2 = getOptions(segments);
                     for (String option : directionalOptions2) {
                         if (option.length() < shortestOptionLength) {
-                            /*
-                            System.out.println("line: " + line);
-                            System.out.println("Numeric: " + numericOption);
-                            System.out.println("directional: " + directionalOptions1);
-                            System.out.println("result: " + option.length() + " " + option);
-                            System.out.println();
-
-                             */
                             shortestOptionLength = option.length();
                         }
                     }
@@ -146,7 +138,7 @@ public class D21P1 {
                             return new String[]{"vA"};
                         case '>':
                             position = 4;
-                            return new String[]{"v>A", ">vA"};
+                            return new String[]{"v>A"};
 
                         default:
                             throw new RuntimeException("Unexpected move instruction: " + character);
@@ -161,10 +153,10 @@ public class D21P1 {
                             return new String[]{"A"};
                         case '<':
                             position = 2;
-                            return new String[]{"v<<A", "<v<A"};
+                            return new String[]{"v<<A"};
                         case 'v':
                             position = 3;
-                            return new String[]{"v<A", "<vA"};
+                            return new String[]{"<vA"};
                         case '>':
                             position = 4;
                             return new String[]{"vA"};
@@ -178,7 +170,7 @@ public class D21P1 {
                             return new String[]{">^A"};
                         case 'A':
                             position = 1;
-                            return new String[]{">>^A", ">^>A"};
+                            return new String[]{">>^A"};
                         case '<':
                             position = 2;
                             return new String[]{"A"};
@@ -198,7 +190,7 @@ public class D21P1 {
                             return new String[]{"^A"};
                         case 'A':
                             position = 1;
-                            return new String[]{">^A", "^>A"};
+                            return new String[]{">^A"};
                         case '<':
                             position = 2;
                             return new String[]{"<A"};
@@ -215,7 +207,7 @@ public class D21P1 {
                     switch (character) {
                         case '^':
                             position = 0;
-                            return new String[]{"<^A", "^<A"};
+                            return new String[]{"<^A"};
                         case 'A':
                             position = 1;
                             return new String[]{"^A"};
@@ -289,25 +281,25 @@ public class D21P1 {
                             return new String[]{"^A"};
                         case '3':
                             this.position = 3;
-                            return new String[]{"^>A", ">^A"};
+                            return new String[]{"^>A",};
                         case '4':
                             this.position = 4;
-                            return new String[]{"^^<A", "^<^A"};
+                            return new String[]{"^<^A"};
                         case '5':
                             this.position = 5;
                             return new String[]{"^^A"};
                         case '6':
                             this.position = 6;
-                            return new String[]{"^^>A", "^>^A", ">^^A"};
+                            return new String[]{"^^>A"};
                         case '7':
                             this.position = 7;
-                            return new String[]{"^^^<A", "^^<^A", "^<^^A"};
+                            return new String[]{"^<^^A"};
                         case '8':
                             this.position = 8;
                             return new String[]{"^^^A"};
                         case '9':
                             this.position = 9;
-                            return new String[]{"^^^>A", "^^>^A", "^>^^A", ">^^^A"};
+                            return new String[]{"^^^>A"};
                         case 'A':
                             this.position = 10;
                             return new String[]{">A"};
@@ -333,24 +325,22 @@ public class D21P1 {
                             return new String[]{"^A"};
                         case '5':
                             this.position = 5;
-                            return new String[]{"^>A", ">^A"};
+                            return new String[]{">^A"};
                         case '6':
                             this.position = 6;
-                            return new String[]{"^>>A", ">^>A", ">>^A"};
+                            return new String[]{"^>>A"};
                         case '7':
                             this.position = 7;
                             return new String[]{"^^A"};
                         case '8':
                             this.position = 8;
-                            return new String[]{"^^>A", "^>^A", ">^^A"};
+                            return new String[]{"^^>A"};
                         case '9':
                             this.position = 9;
-                            return new String[]{"^^>>A", "^>^>A", "^>>^A",
-                                    ">^^>A", ">^>^A",
-                                    ">>^^A"};
+                            return new String[]{"^^>>A"};
                         case 'A':
                             this.position = 10;
-                            return new String[]{">>vA", ">v>A"};
+                            return new String[]{">>vA"};
                         default:
                             throw new RuntimeException("Unexpected move instruction: " + character);
                     }
@@ -370,25 +360,25 @@ public class D21P1 {
                             return new String[]{">A"};
                         case '4':
                             this.position = 4;
-                            return new String[]{"^<A", "<^A"};
+                            return new String[]{"^<A"};
                         case '5':
                             this.position = 5;
                             return new String[]{"^A"};
                         case '6':
                             this.position = 6;
-                            return new String[]{"^>A", ">^A"};
+                            return new String[]{"^>A"};
                         case '7':
                             this.position = 7;
-                            return new String[]{"^^<A", "<^^A", "^<^A"};
+                            return new String[]{"<^^A"};
                         case '8':
                             this.position = 8;
                             return new String[]{"^^A"};
                         case '9':
                             this.position = 9;
-                            return new String[]{"^^>A", "^>^A", ">^^A"};
+                            return new String[]{"^^>A"};
                         case 'A':
                             this.position = 10;
-                            return new String[]{"v>A", ">vA"};
+                            return new String[]{"v>A"};
                         default:
                             throw new RuntimeException("Unexpected move instruction: " + character);
                     }
@@ -396,7 +386,7 @@ public class D21P1 {
                     switch (character) {
                         case '0':
                             this.position = 0;
-                            return new String[]{"<vA", "v<A"};
+                            return new String[]{"<vA"};
                         case '1':
                             this.position = 1;
                             return new String[]{"<<A"};
@@ -408,22 +398,19 @@ public class D21P1 {
                             return new String[]{"A"};
                         case '4':
                             this.position = 4;
-                            return new String[]{"^<<A", "<^<A", "<<^A"};
+                            return new String[]{"<<^A"};
                         case '5':
                             this.position = 5;
-                            return new String[]{"^<A", "<^A"};
+                            return new String[]{"<^A"};
                         case '6':
                             this.position = 6;
                             return new String[]{"^A"};
                         case '7':
                             this.position = 7;
-                            return new String[]{
-                                    "^^<<A", "^<^<A", "^<<^A",
-                                    "<^^<A", "<^<^A",
-                                    "<<^^A"};
+                            return new String[]{"<<^^A"};
                         case '8':
                             this.position = 8;
-                            return new String[]{"^^<A", "^<^A", "<^^A"};
+                            return new String[]{"<^^A"};
                         case '9':
                             this.position = 9;
                             return new String[]{"^^A"};
@@ -437,16 +424,16 @@ public class D21P1 {
                     switch (character) {
                         case '0':
                             this.position = 0;
-                            return new String[]{">vvA", "v>vA"};
+                            return new String[]{">vvA"};
                         case '1':
                             this.position = 1;
                             return new String[]{"vA"};
                         case '2':
                             this.position = 2;
-                            return new String[]{"v>A", ">vA"};
+                            return new String[]{"v>A"};
                         case '3':
                             this.position = 3;
-                            return new String[]{"v>>A", ">v>A", ">>vA"};
+                            return new String[]{"v>>A"};
                         case '4':
                             this.position = 4;
                             return new String[]{"A"};
@@ -461,14 +448,13 @@ public class D21P1 {
                             return new String[]{"^A"};
                         case '8':
                             this.position = 8;
-                            return new String[]{"^>A", ">^A"};
+                            return new String[]{"^>A"};
                         case '9':
                             this.position = 9;
-                            return new String[]{"^>>A", ">^>A", ">>^A"};
+                            return new String[]{"^>>A"};
                         case 'A':
                             this.position = 10;
-                            return new String[]{">>vvA", ">v>vA", ">vv>A",
-                                    "v>>vA", "v>v>A",};
+                            return new String[]{">>vvA"};
                         default:
                             throw new RuntimeException("Unexpected move instruction: " + character);
                     }
@@ -479,13 +465,13 @@ public class D21P1 {
                             return new String[]{"vvA"};
                         case '1':
                             this.position = 1;
-                            return new String[]{"v<A", "<vA"};
+                            return new String[]{"<vA"};
                         case '2':
                             this.position = 2;
                             return new String[]{"vA"};
                         case '3':
                             this.position = 3;
-                            return new String[]{"v>A", ">vA"};
+                            return new String[]{"v>A"};
                         case '4':
                             this.position = 4;
                             return new String[]{"^A"};
@@ -497,16 +483,16 @@ public class D21P1 {
                             return new String[]{">A"};
                         case '7':
                             this.position = 7;
-                            return new String[]{"^<A", "<^A"};
+                            return new String[]{"<^A"};
                         case '8':
                             this.position = 8;
                             return new String[]{"^A"};
                         case '9':
                             this.position = 9;
-                            return new String[]{"^>A", ">^A"};
+                            return new String[]{"^>A"};
                         case 'A':
                             this.position = 10;
-                            return new String[]{"vv>A", "v>vA", ">vvA"};
+                            return new String[]{"vv>A"};
                         default:
                             throw new RuntimeException("Unexpected move instruction: " + character);
                     }
@@ -514,13 +500,13 @@ public class D21P1 {
                     switch (character) {
                         case '0':
                             this.position = 0;
-                            return new String[]{"vv<A", "v<vA", "<vvA"};
+                            return new String[]{"<vvA"};
                         case '1':
                             this.position = 1;
-                            return new String[]{"v<<A", "<v<A", "<<vA"};
+                            return new String[]{"<<vA"};
                         case '2':
                             this.position = 2;
-                            return new String[]{"v<A", "<vA"};
+                            return new String[]{"<vA"};
                         case '3':
                             this.position = 3;
                             return new String[]{"vA"};
@@ -535,10 +521,10 @@ public class D21P1 {
                             return new String[]{"A"};
                         case '7':
                             this.position = 7;
-                            return new String[]{"^<<A", "<^<A", "<<^A"};
+                            return new String[]{"<<^A"};
                         case '8':
                             this.position = 8;
-                            return new String[]{"^<A", "<^A"};
+                            return new String[]{"<^A"};
                         case '9':
                             this.position = 9;
                             return new String[]{"^A"};
@@ -552,27 +538,25 @@ public class D21P1 {
                     switch (character) {
                         case '0':
                             this.position = 0;
-                            return new String[]{">vvvA", "v>vvA", "vv>vA"};
+                            return new String[]{">vvvA"};
                         case '1':
                             this.position = 1;
                             return new String[]{"vvA"};
                         case '2':
                             this.position = 2;
-                            return new String[]{"vv>A", "v>vA", ">vvA"};
+                            return new String[]{"vv>A"};
                         case '3':
                             this.position = 3;
-                            return new String[]{"vv>>A", "v>v>A", "v>>vA",
-                                    ">vv>A", ">v>vA",
-                                    ">>vvA"};
+                            return new String[]{"vv>>A"};
                         case '4':
                             this.position = 4;
                             return new String[]{"vA"};
                         case '5':
                             this.position = 5;
-                            return new String[]{"v>A", ">vA"};
+                            return new String[]{"v>A"};
                         case '6':
                             this.position = 6;
-                            return new String[]{"v>>A", ">v>A", ">>vA"};
+                            return new String[]{"v>>A"};
                         case '7':
                             this.position = 7;
                             return new String[]{"A"};
@@ -584,9 +568,7 @@ public class D21P1 {
                             return new String[]{">>A"};
                         case 'A':
                             this.position = 10;
-                            return new String[]{">>vvvA", ">v>vvA", ">vv>vA", ">vvv>A",
-                                    "v>>vvA", "v>v>vA", "v>vv>A",
-                                    "vv>>vA", "vv>v>A"};
+                            return new String[]{">>vvvA"};
                         default:
                             throw new RuntimeException("Unexpected move instruction: " + character);
                     }
@@ -597,22 +579,22 @@ public class D21P1 {
                             return new String[]{"vvvA"};
                         case '1':
                             this.position = 1;
-                            return new String[]{"vv<A", "v<vA", "<vvA"};
+                            return new String[]{"<vvA"};
                         case '2':
                             this.position = 2;
                             return new String[]{"vvA"};
                         case '3':
                             this.position = 3;
-                            return new String[]{"vv>A", "v>vA", ">vvA"};
+                            return new String[]{"vv>A"};
                         case '4':
                             this.position = 4;
-                            return new String[]{"v<A", "<vA"};
+                            return new String[]{"<vA"};
                         case '5':
                             this.position = 5;
                             return new String[]{"vA"};
                         case '6':
                             this.position = 6;
-                            return new String[]{"v>A", ">vA"};
+                            return new String[]{">vA"};
                         case '7':
                             this.position = 7;
                             return new String[]{"<A"};
@@ -624,7 +606,7 @@ public class D21P1 {
                             return new String[]{">A"};
                         case 'A':
                             this.position = 10;
-                            return new String[]{">vvvA", "v>vvA", "vv>vA", "vvv>A"};
+                            return new String[]{"vvv>A"};
                         default:
                             throw new RuntimeException("Unexpected move instruction: " + character);
                     }
@@ -632,24 +614,22 @@ public class D21P1 {
                     switch (character) {
                         case '0':
                             this.position = 0;
-                            return new String[]{"<vvvA", "v<vvA", "vv<vA", "vvv<A"};
+                            return new String[]{"<vvvA"};
                         case '1':
                             this.position = 1;
-                            return new String[]{"vv<<A", "v<v<A", "v<<vA",
-                                    "<vv<A", "<v<vA",
-                                    "<<vvA"};
+                            return new String[]{"<<vvA"};
                         case '2':
                             this.position = 2;
-                            return new String[]{"vv<A", "v<vA", "<vvA"};
+                            return new String[]{"<vvA"};
                         case '3':
                             this.position = 3;
                             return new String[]{"vvA"};
                         case '4':
                             this.position = 4;
-                            return new String[]{"v<<A", "<v<A", "<<vA"};
+                            return new String[]{"<<vA"};
                         case '5':
                             this.position = 5;
-                            return new String[]{"v<A", "<vA"};
+                            return new String[]{"<vA"};
                         case '6':
                             this.position = 6;
                             return new String[]{"vA"};
@@ -675,32 +655,28 @@ public class D21P1 {
                             return new String[]{"<A"};
                         case '1':
                             this.position = 1;
-                            return new String[]{"<^<A", "^<<A"};
+                            return new String[]{"^<<A"};
                         case '2':
                             this.position = 2;
-                            return new String[]{"<^A", "^<A"};
+                            return new String[]{"<^A"};
                         case '3':
                             this.position = 3;
                             return new String[]{"^A"};
                         case '4':
                             this.position = 4;
-                            return new String[]{"^^<<A", "^<^<A", "^<<^A",
-                                    "<^^<A", "<^<^A"};
+                            return new String[]{"^^<<A"};
                         case '5':
                             this.position = 5;
-                            return new String[]{"^^<A", "^<^A", "<^^A"};
+                            return new String[]{"<^^A"};
                         case '6':
                             this.position = 6;
                             return new String[]{"^^A"};
                         case '7':
                             this.position = 7;
-                            return new String[]{"<^<^^A", "<^^<^A", "<^^^<A",
-                                    "^<<^^A", "^<^<^A", "^<^^<A",
-                                    "^^<<^A", "^^<^<A",
-                                    "^^^<<A"};
+                            return new String[]{"^^^<<A"};
                         case '8':
                             this.position = 8;
-                            return new String[]{"^^^<A", "^^<^A", "^<^^A", "<^^^A"};
+                            return new String[]{"<^^^A"};
                         case '9':
                             this.position = 9;
                             return new String[]{"^^^A"};
