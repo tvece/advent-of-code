@@ -9,8 +9,6 @@ import java.util.List;
 
 public class D21P1 {
 
-    static long INSTRUCTIONS_LENGTH = 0;
-
     public static void main(String[] args) {
         long startTime = System.currentTimeMillis();
         Path filePath = Paths.get("src/main/resources/2024/D21.txt");
@@ -28,14 +26,15 @@ public class D21P1 {
             System.out.println("line: " + line);
 
             NumericBot numericBot = new NumericBot(10);
-            INSTRUCTIONS_LENGTH = 0;
+            long length = 0;
             for (char character : line.toCharArray()) {
-                getInstructionsLength(numericBot.press(character)[0], 0, 2);
+                length += getInstructionsLength(numericBot.press(character)[0], 0, 2);
             }
 
             int inputInt = Integer.parseInt(line.substring(0, line.length() - 1));
-            System.out.println("line result: " + inputInt + " * " + INSTRUCTIONS_LENGTH);
-            result += inputInt * INSTRUCTIONS_LENGTH;
+
+            System.out.println("line result: " + inputInt + " * " + length);
+            result += inputInt * length;
 
 
         }
@@ -44,17 +43,18 @@ public class D21P1 {
 
     }
 
-    private static void getInstructionsLength(String instructions, int depth, int expectedDepth) {
+    private static long getInstructionsLength(String instructions, int depth, int expectedDepth) {
         if (depth == expectedDepth) {
-            INSTRUCTIONS_LENGTH += instructions.length();
-            return;
+            return instructions.length();
         }
 
 
         DirectionalBot db = new DirectionalBot(1);
+        long result = 0;
         for (char instruction : instructions.toCharArray()) {
-            getInstructionsLength(db.press(instruction), depth + 1, expectedDepth);
+            result += getInstructionsLength(db.press(instruction), depth + 1, expectedDepth);
         }
+        return result;
     }
 
     private static class DirectionalBot {
