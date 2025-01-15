@@ -5,11 +5,12 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class D21P1 {
+
+    static long INSTRUCTIONS_LENGTH = 0;
+
     public static void main(String[] args) {
         long startTime = System.currentTimeMillis();
         Path filePath = Paths.get("src/main/resources/2024/D21.txt");
@@ -21,76 +22,39 @@ public class D21P1 {
             throw new RuntimeException("Failed to read input data!", e);
         }
 
-        int result = 0;
+
+        long result = 0;
         for (String line : input) {
             System.out.println("line: " + line);
-            int shortestOptionLength = Integer.MAX_VALUE;
-            List<String[]> segments = new ArrayList<>();
+
             NumericBot numericBot = new NumericBot(10);
-
+            INSTRUCTIONS_LENGTH = 0;
             for (char character : line.toCharArray()) {
-                segments.add(numericBot.press(character));
+                getInstructionsLength(numericBot.press(character)[0], 0, 2);
             }
-            List<String> numericOptions = getOptions(segments);
-            //System.out.println("numeric(" + line + "): " + numericOptions);
-            for (String numericOption : numericOptions) {
-                segments = new ArrayList<>();
-                DirectionalBot directionalBot1 = new DirectionalBot(1);
-                for (char character : numericOption.toCharArray()) {
-                    segments.add(directionalBot1.press(character));
-                }
-                List<String> directionalOptions1 = getOptions(segments);
-                //System.out.println("directional (" + line + "): " + directionalOptions1);
-                for (String directionalOption : directionalOptions1) {
-                    segments = new ArrayList<>();
-                    DirectionalBot directionalBot2 = new DirectionalBot(1);
-                    for (char character : directionalOption.toCharArray()) {
-                        segments.add(directionalBot2.press(character));
-                    }
 
-                    List<String> directionalOptions2 = getOptions(segments);
-                    for (String option : directionalOptions2) {
-                        if (option.length() < shortestOptionLength) {
-                            shortestOptionLength = option.length();
-                        }
-                    }
-                }
-            }
-            System.out.println("Shortest option length: " + shortestOptionLength);
             int inputInt = Integer.parseInt(line.substring(0, line.length() - 1));
-            int lineResult = inputInt * shortestOptionLength;
-            System.out.println("Line calc: " + shortestOptionLength + " * " + inputInt);
-            System.out.println("Line result: " + lineResult);
-            result += lineResult;
-            System.out.println();
+            System.out.println("line result: " + inputInt + " * " + INSTRUCTIONS_LENGTH);
+            result += inputInt * INSTRUCTIONS_LENGTH;
+
+
         }
         System.out.println("Result: " + result);
         System.out.println("Finished in: " + (System.currentTimeMillis() - startTime) + " ms");
 
     }
 
-    private static List<String> getOptions(List<String[]> segments) {
-        // Start with one empty path
-        List<List<String>> paths = new ArrayList<>();
-        paths.add(new ArrayList<>());
-
-        // For each segment, extend the current paths by each choice in that segment
-        for (String[] segment : segments) {
-            List<List<String>> newPaths = new ArrayList<>();
-            for (List<String> existingPath : paths) {
-                for (String choice : segment) {
-                    // Create a new extended path
-                    List<String> extended = new ArrayList<>(existingPath);
-                    extended.add(choice);
-                    newPaths.add(extended);
-                }
-            }
-            // Update paths to the new extended paths
-            paths = newPaths;
+    private static void getInstructionsLength(String instructions, int depth, int expectedDepth) {
+        if (depth == expectedDepth) {
+            INSTRUCTIONS_LENGTH += instructions.length();
+            return;
         }
 
-        // Get the completed paths
-        return paths.stream().map(path -> String.join("", path)).collect(Collectors.toList());
+
+        DirectionalBot db = new DirectionalBot(1);
+        for (char instruction : instructions.toCharArray()) {
+            getInstructionsLength(db.press(instruction), depth + 1, expectedDepth);
+        }
     }
 
     private static class DirectionalBot {
@@ -118,27 +82,27 @@ public class D21P1 {
         /**
          * updates position and executes press of character
          *
-         * @return possible move sets required for the execution
+         * @return move sets required for the execution
          */
-        public String[] press(char character) {
+        public String press(char character) {
             switch (position) {
                 case 0:
                     switch (character) {
                         case '^':
                             position = 0;
-                            return new String[]{"A"};
+                            return "A";
                         case 'A':
                             position = 1;
-                            return new String[]{">A"};
+                            return ">A";
                         case '<':
                             position = 2;
-                            return new String[]{"v<A"};
+                            return "v<A";
                         case 'v':
                             position = 3;
-                            return new String[]{"vA"};
+                            return "vA";
                         case '>':
                             position = 4;
-                            return new String[]{"v>A"};
+                            return "v>A";
 
                         default:
                             throw new RuntimeException("Unexpected move instruction: " + character);
@@ -147,19 +111,19 @@ public class D21P1 {
                     switch (character) {
                         case '^':
                             position = 0;
-                            return new String[]{"<A"};
+                            return "<A";
                         case 'A':
                             position = 1;
-                            return new String[]{"A"};
+                            return "A";
                         case '<':
                             position = 2;
-                            return new String[]{"v<<A"};
+                            return "v<<A";
                         case 'v':
                             position = 3;
-                            return new String[]{"<vA"};
+                            return "<vA";
                         case '>':
                             position = 4;
-                            return new String[]{"vA"};
+                            return "vA";
                         default:
                             throw new RuntimeException("Unexpected move instruction: " + character);
                     }
@@ -167,19 +131,19 @@ public class D21P1 {
                     switch (character) {
                         case '^':
                             position = 0;
-                            return new String[]{">^A"};
+                            return ">^A";
                         case 'A':
                             position = 1;
-                            return new String[]{">>^A"};
+                            return ">>^A";
                         case '<':
                             position = 2;
-                            return new String[]{"A"};
+                            return "A";
                         case 'v':
                             position = 3;
-                            return new String[]{">A",};
+                            return ">A";
                         case '>':
                             position = 4;
-                            return new String[]{">>A"};
+                            return ">>A";
                         default:
                             throw new RuntimeException("Unexpected move instruction: " + character);
                     }
@@ -187,19 +151,19 @@ public class D21P1 {
                     switch (character) {
                         case '^':
                             position = 0;
-                            return new String[]{"^A"};
+                            return "^A";
                         case 'A':
                             position = 1;
-                            return new String[]{">^A"};
+                            return ">^A";
                         case '<':
                             position = 2;
-                            return new String[]{"<A"};
+                            return "<A";
                         case 'v':
                             position = 3;
-                            return new String[]{"A"};
+                            return "A";
                         case '>':
                             position = 4;
-                            return new String[]{">A"};
+                            return ">A";
                         default:
                             throw new RuntimeException("Unexpected move instruction: " + character);
                     }
@@ -207,19 +171,19 @@ public class D21P1 {
                     switch (character) {
                         case '^':
                             position = 0;
-                            return new String[]{"<^A"};
+                            return "<^A";
                         case 'A':
                             position = 1;
-                            return new String[]{"^A"};
+                            return "^A";
                         case '<':
                             position = 2;
-                            return new String[]{"<<A"};
+                            return "<<A";
                         case 'v':
                             position = 3;
-                            return new String[]{"<A"};
+                            return "<A";
                         case '>':
                             position = 4;
-                            return new String[]{"A"};
+                            return "A";
                         default:
                             throw new RuntimeException("Unexpected move instruction: " + character);
                     }
