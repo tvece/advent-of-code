@@ -1,0 +1,719 @@
+package com.advent._2024;
+
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class D21P1 {
+    public static void main(String[] args) {
+        long startTime = System.currentTimeMillis();
+        Path filePath = Paths.get("src/main/resources/2024/D21.txt");
+        List<String> input;
+        try {
+            input = Files.readAllLines(filePath, StandardCharsets.UTF_8);
+        } catch (
+                IOException e) {
+            throw new RuntimeException("Failed to read input data!", e);
+        }
+
+        int result = 0;
+        for (String line : input) {
+            System.out.println("line: " + line);
+            int shortestOptionLength = Integer.MAX_VALUE;
+            List<String[]> segments = new ArrayList<>();
+            NumericBot numericBot = new NumericBot(10);
+
+            for (char character : line.toCharArray()) {
+                segments.add(numericBot.press(character));
+            }
+            List<String> numericOptions = getOptions(segments);
+            //System.out.println("numeric(" + line + "): " + numericOptions);
+            for (String numericOption : numericOptions) {
+                segments = new ArrayList<>();
+                DirectionalBot directionalBot1 = new DirectionalBot(1);
+                for (char character : numericOption.toCharArray()) {
+                    segments.add(directionalBot1.press(character));
+                }
+                List<String> directionalOptions1 = getOptions(segments);
+                //System.out.println("directional (" + line + "): " + directionalOptions1);
+                for (String directionalOption : directionalOptions1) {
+                    segments = new ArrayList<>();
+                    DirectionalBot directionalBot2 = new DirectionalBot(1);
+                    for (char character : directionalOption.toCharArray()) {
+                        segments.add(directionalBot2.press(character));
+                    }
+
+                    List<String> directionalOptions2 = getOptions(segments);
+                    for (String option : directionalOptions2) {
+                        if (option.length() < shortestOptionLength) {
+                            /*
+                            System.out.println("line: " + line);
+                            System.out.println("Numeric: " + numericOption);
+                            System.out.println("directional: " + directionalOptions1);
+                            System.out.println("result: " + option.length() + " " + option);
+                            System.out.println();
+
+                             */
+                            shortestOptionLength = option.length();
+                        }
+                    }
+                }
+            }
+            System.out.println("Shortest option length: " + shortestOptionLength);
+            int inputInt = Integer.parseInt(line.substring(0, line.length() - 1));
+            int lineResult = inputInt * shortestOptionLength;
+            System.out.println("Line calc: " + shortestOptionLength + " * " + inputInt);
+            System.out.println("Line result: " + lineResult);
+            result += lineResult;
+            System.out.println();
+        }
+        System.out.println("Result: " + result);
+        System.out.println("Finished in: " + (System.currentTimeMillis() - startTime) + " ms");
+
+    }
+
+    private static List<String> getOptions(List<String[]> segments) {
+        // Start with one empty path
+        List<List<String>> paths = new ArrayList<>();
+        paths.add(new ArrayList<>());
+
+        // For each segment, extend the current paths by each choice in that segment
+        for (String[] segment : segments) {
+            List<List<String>> newPaths = new ArrayList<>();
+            for (List<String> existingPath : paths) {
+                for (String choice : segment) {
+                    // Create a new extended path
+                    List<String> extended = new ArrayList<>(existingPath);
+                    extended.add(choice);
+                    newPaths.add(extended);
+                }
+            }
+            // Update paths to the new extended paths
+            paths = newPaths;
+        }
+
+        // Get the completed paths
+        return paths.stream().map(path -> String.join("", path)).collect(Collectors.toList());
+    }
+
+    private static class DirectionalBot {
+        // @formatter:off
+        /**
+         *     +---+---+
+         *     | ^ | A |
+         * +---+---+---+
+         * | < | v | > |
+         * +---+---+---+
+         * converts to:
+         *     +---+---+
+         *     | 0 | 1 |
+         * +---+---+---+
+         * | 2 | 3 | 4 |
+         * +---+---+---+
+         */
+        int position;
+        // @formatter:on
+
+        public DirectionalBot(int position) {
+            this.position = position;
+        }
+
+        /**
+         * updates position and executes press of character
+         *
+         * @return possible move sets required for the execution
+         */
+        public String[] press(char character) {
+            switch (position) {
+                case 0:
+                    switch (character) {
+                        case '^':
+                            position = 0;
+                            return new String[]{"A"};
+                        case 'A':
+                            position = 1;
+                            return new String[]{">A"};
+                        case '<':
+                            position = 2;
+                            return new String[]{"v<A"};
+                        case 'v':
+                            position = 3;
+                            return new String[]{"vA"};
+                        case '>':
+                            position = 4;
+                            return new String[]{"v>A", ">vA"};
+
+                        default:
+                            throw new RuntimeException("Unexpected move instruction: " + character);
+                    }
+                case 1:
+                    switch (character) {
+                        case '^':
+                            position = 0;
+                            return new String[]{"<A"};
+                        case 'A':
+                            position = 1;
+                            return new String[]{"A"};
+                        case '<':
+                            position = 2;
+                            return new String[]{"v<<A", "<v<A"};
+                        case 'v':
+                            position = 3;
+                            return new String[]{"v<A", "<vA"};
+                        case '>':
+                            position = 4;
+                            return new String[]{"vA"};
+                        default:
+                            throw new RuntimeException("Unexpected move instruction: " + character);
+                    }
+                case 2:
+                    switch (character) {
+                        case '^':
+                            position = 0;
+                            return new String[]{">^A"};
+                        case 'A':
+                            position = 1;
+                            return new String[]{">>^A", ">^>A"};
+                        case '<':
+                            position = 2;
+                            return new String[]{"A"};
+                        case 'v':
+                            position = 3;
+                            return new String[]{">A",};
+                        case '>':
+                            position = 4;
+                            return new String[]{">>A"};
+                        default:
+                            throw new RuntimeException("Unexpected move instruction: " + character);
+                    }
+                case 3:
+                    switch (character) {
+                        case '^':
+                            position = 0;
+                            return new String[]{"^A"};
+                        case 'A':
+                            position = 1;
+                            return new String[]{">^A", "^>A"};
+                        case '<':
+                            position = 2;
+                            return new String[]{"<A"};
+                        case 'v':
+                            position = 3;
+                            return new String[]{"A"};
+                        case '>':
+                            position = 4;
+                            return new String[]{">A"};
+                        default:
+                            throw new RuntimeException("Unexpected move instruction: " + character);
+                    }
+                case 4:
+                    switch (character) {
+                        case '^':
+                            position = 0;
+                            return new String[]{"<^A", "^<A"};
+                        case 'A':
+                            position = 1;
+                            return new String[]{"^A"};
+                        case '<':
+                            position = 2;
+                            return new String[]{"<<A"};
+                        case 'v':
+                            position = 3;
+                            return new String[]{"<A"};
+                        case '>':
+                            position = 4;
+                            return new String[]{"A"};
+                        default:
+                            throw new RuntimeException("Unexpected move instruction: " + character);
+                    }
+                default:
+                    throw new RuntimeException("Unexpected move instruction: " + character);
+            }
+
+        }
+
+    }
+
+    private static class NumericBot {
+        // @formatter:off
+        /**
+         * +---+---+---+
+         * | 7 | 8 | 9 |
+         * +---+---+---+
+         * | 4 | 5 | 6 |
+         * +---+---+---+
+         * | 1 | 2 | 3 |
+         * +---+---+---+
+         *     | 0 | A |
+         *     +---+---+
+         * converts to:
+         * +---+---+---+
+         * | 7 | 8 | 9 |
+         * +---+---+---+
+         * | 4 | 5 | 6 |
+         * +---+---+---+
+         * | 1 | 2 | 3 |
+         * +---+---+---+
+         *     | 0 | 10 |
+         *     +---+---+
+         */
+        int position;
+        // @formatter:on
+
+        public NumericBot(int position) {
+            this.position = position;
+        }
+
+        /**
+         * updates position and executes press of character
+         *
+         * @return possible move sets required for the execution
+         */
+        public String[] press(char character) {
+            switch (position) {
+                case 0:
+                    switch (character) {
+                        case '0':
+                            this.position = 0;
+                            return new String[]{"A"};
+                        case '1':
+                            this.position = 1;
+                            return new String[]{"^<A",};
+                        case '2':
+                            this.position = 2;
+                            return new String[]{"^A"};
+                        case '3':
+                            this.position = 3;
+                            return new String[]{"^>A", ">^A"};
+                        case '4':
+                            this.position = 4;
+                            return new String[]{"^^<A", "^<^A"};
+                        case '5':
+                            this.position = 5;
+                            return new String[]{"^^A"};
+                        case '6':
+                            this.position = 6;
+                            return new String[]{"^^>A", "^>^A", ">^^A"};
+                        case '7':
+                            this.position = 7;
+                            return new String[]{"^^^<A", "^^<^A", "^<^^A"};
+                        case '8':
+                            this.position = 8;
+                            return new String[]{"^^^A"};
+                        case '9':
+                            this.position = 9;
+                            return new String[]{"^^^>A", "^^>^A", "^>^^A", ">^^^A"};
+                        case 'A':
+                            this.position = 10;
+                            return new String[]{">A"};
+                        default:
+                            throw new RuntimeException("Unexpected move instruction: " + character);
+                    }
+                case 1:
+                    switch (character) {
+                        case '0':
+                            this.position = 0;
+                            return new String[]{">vA"};
+                        case '1':
+                            this.position = 1;
+                            return new String[]{"A"};
+                        case '2':
+                            this.position = 2;
+                            return new String[]{">A"};
+                        case '3':
+                            this.position = 3;
+                            return new String[]{">>A"};
+                        case '4':
+                            this.position = 4;
+                            return new String[]{"^A"};
+                        case '5':
+                            this.position = 5;
+                            return new String[]{"^>A", ">^A"};
+                        case '6':
+                            this.position = 6;
+                            return new String[]{"^>>A", ">^>A", ">>^A"};
+                        case '7':
+                            this.position = 7;
+                            return new String[]{"^^A"};
+                        case '8':
+                            this.position = 8;
+                            return new String[]{"^^>A", "^>^A", ">^^A"};
+                        case '9':
+                            this.position = 9;
+                            return new String[]{"^^>>A", "^>^>A", "^>>^A",
+                                    ">^^>A", ">^>^A",
+                                    ">>^^A"};
+                        case 'A':
+                            this.position = 10;
+                            return new String[]{">>vA", ">v>A"};
+                        default:
+                            throw new RuntimeException("Unexpected move instruction: " + character);
+                    }
+                case 2:
+                    switch (character) {
+                        case '0':
+                            this.position = 0;
+                            return new String[]{"vA"};
+                        case '1':
+                            this.position = 1;
+                            return new String[]{"<A"};
+                        case '2':
+                            this.position = 2;
+                            return new String[]{"A"};
+                        case '3':
+                            this.position = 3;
+                            return new String[]{">A"};
+                        case '4':
+                            this.position = 4;
+                            return new String[]{"^<A", "<^A"};
+                        case '5':
+                            this.position = 5;
+                            return new String[]{"^A"};
+                        case '6':
+                            this.position = 6;
+                            return new String[]{"^>A", ">^A"};
+                        case '7':
+                            this.position = 7;
+                            return new String[]{"^^<A", "<^^A", "^<^A"};
+                        case '8':
+                            this.position = 8;
+                            return new String[]{"^^A"};
+                        case '9':
+                            this.position = 9;
+                            return new String[]{"^^>A", "^>^A", ">^^A"};
+                        case 'A':
+                            this.position = 10;
+                            return new String[]{"v>A", ">vA"};
+                        default:
+                            throw new RuntimeException("Unexpected move instruction: " + character);
+                    }
+                case 3:
+                    switch (character) {
+                        case '0':
+                            this.position = 0;
+                            return new String[]{"<vA", "v<A"};
+                        case '1':
+                            this.position = 1;
+                            return new String[]{"<<A"};
+                        case '2':
+                            this.position = 2;
+                            return new String[]{"<A"};
+                        case '3':
+                            this.position = 3;
+                            return new String[]{"A"};
+                        case '4':
+                            this.position = 4;
+                            return new String[]{"^<<A", "<^<A", "<<^A"};
+                        case '5':
+                            this.position = 5;
+                            return new String[]{"^<A", "<^A"};
+                        case '6':
+                            this.position = 6;
+                            return new String[]{"^A"};
+                        case '7':
+                            this.position = 7;
+                            return new String[]{
+                                    "^^<<A", "^<^<A", "^<<^A",
+                                    "<^^<A", "<^<^A",
+                                    "<<^^A"};
+                        case '8':
+                            this.position = 8;
+                            return new String[]{"^^<A", "^<^A", "<^^A"};
+                        case '9':
+                            this.position = 9;
+                            return new String[]{"^^A"};
+                        case 'A':
+                            this.position = 10;
+                            return new String[]{"vA"};
+                        default:
+                            throw new RuntimeException("Unexpected move instruction: " + character);
+                    }
+                case 4:
+                    switch (character) {
+                        case '0':
+                            this.position = 0;
+                            return new String[]{">vvA", "v>vA"};
+                        case '1':
+                            this.position = 1;
+                            return new String[]{"vA"};
+                        case '2':
+                            this.position = 2;
+                            return new String[]{"v>A", ">vA"};
+                        case '3':
+                            this.position = 3;
+                            return new String[]{"v>>A", ">v>A", ">>vA"};
+                        case '4':
+                            this.position = 4;
+                            return new String[]{"A"};
+                        case '5':
+                            this.position = 5;
+                            return new String[]{">A"};
+                        case '6':
+                            this.position = 6;
+                            return new String[]{">>A"};
+                        case '7':
+                            this.position = 7;
+                            return new String[]{"^A"};
+                        case '8':
+                            this.position = 8;
+                            return new String[]{"^>A", ">^A"};
+                        case '9':
+                            this.position = 9;
+                            return new String[]{"^>>A", ">^>A", ">>^A"};
+                        case 'A':
+                            this.position = 10;
+                            return new String[]{">>vvA", ">v>vA", ">vv>A",
+                                    "v>>vA", "v>v>A",};
+                        default:
+                            throw new RuntimeException("Unexpected move instruction: " + character);
+                    }
+                case 5:
+                    switch (character) {
+                        case '0':
+                            this.position = 0;
+                            return new String[]{"vvA"};
+                        case '1':
+                            this.position = 1;
+                            return new String[]{"v<A", "<vA"};
+                        case '2':
+                            this.position = 2;
+                            return new String[]{"vA"};
+                        case '3':
+                            this.position = 3;
+                            return new String[]{"v>A", ">vA"};
+                        case '4':
+                            this.position = 4;
+                            return new String[]{"^A"};
+                        case '5':
+                            this.position = 5;
+                            return new String[]{"A"};
+                        case '6':
+                            this.position = 6;
+                            return new String[]{">A"};
+                        case '7':
+                            this.position = 7;
+                            return new String[]{"^<A", "<^A"};
+                        case '8':
+                            this.position = 8;
+                            return new String[]{"^A"};
+                        case '9':
+                            this.position = 9;
+                            return new String[]{"^>A", ">^A"};
+                        case 'A':
+                            this.position = 10;
+                            return new String[]{"vv>A", "v>vA", ">vvA"};
+                        default:
+                            throw new RuntimeException("Unexpected move instruction: " + character);
+                    }
+                case 6:
+                    switch (character) {
+                        case '0':
+                            this.position = 0;
+                            return new String[]{"vv<A", "v<vA", "<vvA"};
+                        case '1':
+                            this.position = 1;
+                            return new String[]{"v<<A", "<v<A", "<<vA"};
+                        case '2':
+                            this.position = 2;
+                            return new String[]{"v<A", "<vA"};
+                        case '3':
+                            this.position = 3;
+                            return new String[]{"vA"};
+                        case '4':
+                            this.position = 4;
+                            return new String[]{"<<A"};
+                        case '5':
+                            this.position = 5;
+                            return new String[]{"<A"};
+                        case '6':
+                            this.position = 6;
+                            return new String[]{"A"};
+                        case '7':
+                            this.position = 7;
+                            return new String[]{"^<<A", "<^<A", "<<^A"};
+                        case '8':
+                            this.position = 8;
+                            return new String[]{"^<A", "<^A"};
+                        case '9':
+                            this.position = 9;
+                            return new String[]{"^A"};
+                        case 'A':
+                            this.position = 10;
+                            return new String[]{"vvA"};
+                        default:
+                            throw new RuntimeException("Unexpected move instruction: " + character);
+                    }
+                case 7:
+                    switch (character) {
+                        case '0':
+                            this.position = 0;
+                            return new String[]{">vvvA", "v>vvA", "vv>vA"};
+                        case '1':
+                            this.position = 1;
+                            return new String[]{"vvA"};
+                        case '2':
+                            this.position = 2;
+                            return new String[]{"vv>A", "v>vA", ">vvA"};
+                        case '3':
+                            this.position = 3;
+                            return new String[]{"vv>>A", "v>v>A", "v>>vA",
+                                    ">vv>A", ">v>vA",
+                                    ">>vvA"};
+                        case '4':
+                            this.position = 4;
+                            return new String[]{"vA"};
+                        case '5':
+                            this.position = 5;
+                            return new String[]{"v>A", ">vA"};
+                        case '6':
+                            this.position = 6;
+                            return new String[]{"v>>A", ">v>A", ">>vA"};
+                        case '7':
+                            this.position = 7;
+                            return new String[]{"A"};
+                        case '8':
+                            this.position = 8;
+                            return new String[]{">A"};
+                        case '9':
+                            this.position = 9;
+                            return new String[]{">>A"};
+                        case 'A':
+                            this.position = 10;
+                            return new String[]{">>vvvA", ">v>vvA", ">vv>vA", ">vvv>A",
+                                    "v>>vvA", "v>v>vA", "v>vv>A",
+                                    "vv>>vA", "vv>v>A"};
+                        default:
+                            throw new RuntimeException("Unexpected move instruction: " + character);
+                    }
+                case 8:
+                    switch (character) {
+                        case '0':
+                            this.position = 0;
+                            return new String[]{"vvvA"};
+                        case '1':
+                            this.position = 1;
+                            return new String[]{"vv<A", "v<vA", "<vvA"};
+                        case '2':
+                            this.position = 2;
+                            return new String[]{"vvA"};
+                        case '3':
+                            this.position = 3;
+                            return new String[]{"vv>A", "v>vA", ">vvA"};
+                        case '4':
+                            this.position = 4;
+                            return new String[]{"v<A", "<vA"};
+                        case '5':
+                            this.position = 5;
+                            return new String[]{"vA"};
+                        case '6':
+                            this.position = 6;
+                            return new String[]{"v>A", ">vA"};
+                        case '7':
+                            this.position = 7;
+                            return new String[]{"<A"};
+                        case '8':
+                            this.position = 8;
+                            return new String[]{"A"};
+                        case '9':
+                            this.position = 9;
+                            return new String[]{">A"};
+                        case 'A':
+                            this.position = 10;
+                            return new String[]{">vvvA", "v>vvA", "vv>vA", "vvv>A"};
+                        default:
+                            throw new RuntimeException("Unexpected move instruction: " + character);
+                    }
+                case 9:
+                    switch (character) {
+                        case '0':
+                            this.position = 0;
+                            return new String[]{"<vvvA", "v<vvA", "vv<vA", "vvv<A"};
+                        case '1':
+                            this.position = 1;
+                            return new String[]{"vv<<A", "v<v<A", "v<<vA",
+                                    "<vv<A", "<v<vA",
+                                    "<<vvA"};
+                        case '2':
+                            this.position = 2;
+                            return new String[]{"vv<A", "v<vA", "<vvA"};
+                        case '3':
+                            this.position = 3;
+                            return new String[]{"vvA"};
+                        case '4':
+                            this.position = 4;
+                            return new String[]{"v<<A", "<v<A", "<<vA"};
+                        case '5':
+                            this.position = 5;
+                            return new String[]{"v<A", "<vA"};
+                        case '6':
+                            this.position = 6;
+                            return new String[]{"vA"};
+                        case '7':
+                            this.position = 7;
+                            return new String[]{"<<A"};
+                        case '8':
+                            this.position = 8;
+                            return new String[]{"<A"};
+                        case '9':
+                            this.position = 9;
+                            return new String[]{"A"};
+                        case 'A':
+                            this.position = 10;
+                            return new String[]{"vvvA"};
+                        default:
+                            throw new RuntimeException("Unexpected move instruction: " + character);
+                    }
+                case 10:
+                    switch (character) {
+                        case '0':
+                            this.position = 0;
+                            return new String[]{"<A"};
+                        case '1':
+                            this.position = 1;
+                            return new String[]{"<^<A", "^<<A"};
+                        case '2':
+                            this.position = 2;
+                            return new String[]{"<^A", "^<A"};
+                        case '3':
+                            this.position = 3;
+                            return new String[]{"^A"};
+                        case '4':
+                            this.position = 4;
+                            return new String[]{"^^<<A", "^<^<A", "^<<^A",
+                                    "<^^<A", "<^<^A"};
+                        case '5':
+                            this.position = 5;
+                            return new String[]{"^^<A", "^<^A", "<^^A"};
+                        case '6':
+                            this.position = 6;
+                            return new String[]{"^^A"};
+                        case '7':
+                            this.position = 7;
+                            return new String[]{"<^<^^A", "<^^<^A", "<^^^<A",
+                                    "^<<^^A", "^<^<^A", "^<^^<A",
+                                    "^^<<^A", "^^<^<A",
+                                    "^^^<<A"};
+                        case '8':
+                            this.position = 8;
+                            return new String[]{"^^^<A", "^^<^A", "^<^^A", "<^^^A"};
+                        case '9':
+                            this.position = 9;
+                            return new String[]{"^^^A"};
+                        case 'A':
+                            this.position = 10;
+                            return new String[]{"A"};
+                        default:
+                            throw new RuntimeException("Unexpected move instruction: " + character);
+                    }
+                default:
+                    throw new RuntimeException("Unexpected save position: " + position);
+            }
+        }
+
+    }
+}
