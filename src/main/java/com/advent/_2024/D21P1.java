@@ -8,10 +8,6 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 
-// too low: 70047831437762
-// too high:224149989732684
-
-
 public class D21P1 {
 
     public static void main(String[] args) {
@@ -33,7 +29,7 @@ public class D21P1 {
             NumericBot numericBot = new NumericBot(10);
             long length = 0;
             for (char character : line.toCharArray()) {
-                length += getInstructionsLength(numericBot.press(character)[0], 0, 2, new HashMap<>());
+                length += getInstructionsLength(numericBot.press(character)[0], 0, 25, new HashMap<>());
             }
 
             int inputInt = Integer.parseInt(line.substring(0, line.length() - 1));
@@ -174,7 +170,7 @@ public class D21P1 {
                             return "^A";
                         case 'A':
                             position = 1;
-                            return ">^A";
+                            return "^>A";
                         case '<':
                             position = 2;
                             return "<A";
@@ -309,7 +305,7 @@ public class D21P1 {
                             return new String[]{"^A"};
                         case '5':
                             this.position = 5;
-                            return new String[]{">^A"};
+                            return new String[]{"^>A"};
                         case '6':
                             this.position = 6;
                             return new String[]{"^>>A"};
@@ -344,7 +340,7 @@ public class D21P1 {
                             return new String[]{">A"};
                         case '4':
                             this.position = 4;
-                            return new String[]{"^<A"};
+                            return new String[]{"<^A"};
                         case '5':
                             this.position = 5;
                             return new String[]{"^A"};
