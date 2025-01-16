@@ -5,7 +5,12 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.List;
+
+// too low: 70047831437762
+// too high:224149989732684
+
 
 public class D21P1 {
 
@@ -28,7 +33,7 @@ public class D21P1 {
             NumericBot numericBot = new NumericBot(10);
             long length = 0;
             for (char character : line.toCharArray()) {
-                length += getInstructionsLength(numericBot.press(character)[0], 0, 2);
+                length += getInstructionsLength(numericBot.press(character)[0], 0, 2, new HashMap<>());
             }
 
             int inputInt = Integer.parseInt(line.substring(0, line.length() - 1));
@@ -43,18 +48,33 @@ public class D21P1 {
 
     }
 
-    private static long getInstructionsLength(String instructions, int depth, int expectedDepth) {
+    private static long getInstructionsLength(String instructions, int depth, int expectedDepth, HashMap<String, Long> cache) {
         if (depth == expectedDepth) {
             return instructions.length();
         }
 
-
         DirectionalBot db = new DirectionalBot(1);
         long result = 0;
+        int previousPosition = db.position;
         for (char instruction : instructions.toCharArray()) {
-            result += getInstructionsLength(db.press(instruction), depth + 1, expectedDepth);
+
+            String nextInstructions = db.press(instruction);
+            int currentPosition = db.position;
+            String cacheKey = getCacheKey(previousPosition, currentPosition, depth, nextInstructions);
+            if (cache.containsKey(cacheKey)) {
+                result += cache.get(cacheKey);
+            } else {
+                long cacheValue = getInstructionsLength(nextInstructions, depth + 1, expectedDepth, cache);
+                result += cacheValue;
+                cache.put(cacheKey, cacheValue);
+            }
+            previousPosition = db.position;
         }
         return result;
+    }
+
+    private static String getCacheKey(int previousPosition, int position, int depth, String instruction) {
+        return previousPosition + ";" + position + ";" + depth + ";" + instruction;
     }
 
     private static class DirectionalBot {
