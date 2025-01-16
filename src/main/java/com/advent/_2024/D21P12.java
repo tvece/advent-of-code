@@ -8,7 +8,12 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 
-public class D21P1 {
+public class D21P12 {
+
+    // PART 1
+    //final static int DEPTH = 2;
+    // PART 2
+    final static int DEPTH = 25;
 
     public static void main(String[] args) {
         long startTime = System.currentTimeMillis();
@@ -29,7 +34,7 @@ public class D21P1 {
             NumericBot numericBot = new NumericBot(10);
             long length = 0;
             for (char character : line.toCharArray()) {
-                length += getInstructionsLength(numericBot.press(character)[0], 0, 25, new HashMap<>());
+                length += getInstructionsLength(numericBot.press(character)[0], 0, DEPTH, new HashMap<>());
             }
 
             int inputInt = Integer.parseInt(line.substring(0, line.length() - 1));
