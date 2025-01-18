@@ -7,7 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
-public class D22 {
+public class D22P1 {
     public static void main(String[] args) {
         long startTime = System.currentTimeMillis();
         Path filePath = Paths.get("src/main/resources/2024/D22.txt");
