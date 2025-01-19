@@ -44,19 +44,18 @@ public class D24P1 {
         }
         zGates.sort(Comparator.comparingInt(gate -> Integer.parseInt(gate.id.substring(1))));
 
-        HashMap<String, Boolean> cache = new HashMap<>();
         long result = 0;
         for (int i = 0; i < zGates.size(); i++) {
             Gate gate = zGates.get(i);
             System.out.println(gate.id);
-            result += (long) ((getGateValue(gate, gates, wires, cache) ? 1 : 0) * Math.pow(2, i));
+            result += (long) ((getGateValue(gate, gates, wires) ? 1 : 0) * Math.pow(2, i));
         }
 
         System.out.println("result: " + result);
         System.out.println("Finished in: " + (System.currentTimeMillis() - startTime) + " ms");
     }
 
-    private static boolean getGateValue(Gate gate, HashMap<String, Gate> gates, HashMap<String, Boolean> wires, HashMap<String, Boolean> cache) {
+    private static boolean getGateValue(Gate gate, HashMap<String, Gate> gates, HashMap<String, Boolean> wires) {
         boolean result;
 
         boolean isWire = gate.characterA.startsWith("x") || gate.characterA.startsWith("y");
@@ -64,11 +63,7 @@ public class D24P1 {
         if (isWire) {
             valueA = wires.get(gate.characterA);
         } else {
-            if (cache.containsKey(gate.characterA)) {
-                valueA = cache.get(gate.characterA);
-            } else {
-                valueA = getGateValue(gates.get(gate.characterA), gates, wires, cache);
-            }
+            valueA = getGateValue(gates.get(gate.characterA), gates, wires);
         }
 
         isWire = gate.characterB.startsWith("x") || gate.characterB.startsWith("y");
@@ -76,11 +71,7 @@ public class D24P1 {
         if (isWire) {
             valueB = wires.get(gate.characterB);
         } else {
-            if (cache.containsKey(gate.characterB)) {
-                valueB = cache.get(gate.characterB);
-            } else {
-                valueB = getGateValue(gates.get(gate.characterB), gates, wires, cache);
-            }
+            valueB = getGateValue(gates.get(gate.characterB), gates, wires);
         }
 
         switch (gate.operation) {
@@ -97,7 +88,6 @@ public class D24P1 {
                 throw new RuntimeException("Invalid operation: " + gate.operation);
         }
 
-        cache.put(gate.id, result);
         return result;
     }
 
