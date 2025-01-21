@@ -7,7 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
-public class D19P1 {
+public class D19P2 {
     public static void main(String[] args) {
         Path filePath = Paths.get("src/main/resources/2024/D19.txt");
         List<String> input;
@@ -33,11 +33,9 @@ public class D19P1 {
         }
 
         // For each design, check if it can be formed by the available towel patterns
-        int result = 0;
+        long result = 0;
         for (String design : designs) {
-            if (canFormDesign(design, towelPatterns)) {
-                result++;
-            }
+            result += canFormDesign(design, towelPatterns);
         }
 
         // Output the count of possible designs
@@ -45,22 +43,22 @@ public class D19P1 {
     }
 
     // Helper method to check if a design can be formed by concatenating patterns in towelPatterns
-    private static boolean canFormDesign(String design, Set<String> towelPatterns) {
+    private static long canFormDesign(String design, Set<String> towelPatterns) {
         int n = design.length();
-        boolean[] dp = new boolean[n + 1];
-        dp[0] = true; // Empty prefix is always valid.
+        long[] dp = new long[n + 1];
+        dp[0] = 1; // Empty prefix is always valid.
 
         // Go through each position in the design.
         for (int i = 0; i < n; i++) {
             // Only proceed if the prefix up to i is formable.
-            if (!dp[i]) continue;
-
-            // Try to place each pattern starting at index i.
-            for (String pattern : towelPatterns) {
-                int end = i + pattern.length();
-                // Check boundary and if substring matches the pattern.
-                if (end <= n && design.substring(i, end).equals(pattern)) {
-                    dp[end] = true;
+            if (dp[i] > 0) {
+                // Try to place each pattern starting at index i.
+                for (String pattern : towelPatterns) {
+                    int end = i + pattern.length();
+                    // Check boundary and if substring matches the pattern.
+                    if (end <= n && design.substring(i, end).equals(pattern)) {
+                        dp[end] += dp[i];
+                    }
                 }
             }
         }
