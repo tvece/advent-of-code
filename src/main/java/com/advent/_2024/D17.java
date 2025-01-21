@@ -8,15 +8,14 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
-//TODO: part 2
 public class D17 {
-    private int registerA;
-    private int registerB;
-    private int registerC;
+    int registerA;
+    int registerB;
+    int registerC;
 
-    private int instructionPointer = 0;
+    int instructionPointer = 0;
 
-    private String out = "";
+    String out = "";
 
     public static void main(String[] args) {
         Path filePath = Paths.get("src/main/resources/2024/D17.txt");
@@ -26,66 +25,49 @@ public class D17 {
         } catch (IOException e) {
             throw new RuntimeException("Failed to read input data!", e);
         }
+        D17 instance = new D17();
         int defaultB = Integer.parseInt(input.get(1).substring("Register B: ".length()));
         int defaultC = Integer.parseInt(input.get(2).substring("Register C: ".length()));
-
+        instance.registerA = Integer.parseInt(input.get(0).substring("Register A: ".length()));
+        instance.registerB = defaultB;
+        instance.registerC = defaultC;
         String goal = input.get(4).substring("Program: ".length());
         List<Integer> instructions = Arrays.stream(goal.split(",")).map(Integer::parseInt).toList();
-        int result = 0;
-        while (true) {
-            D17 instance = new D17(result, defaultB, defaultC);
+        instance.instructionPointer = 0;
 
-            while (instance.instructionPointer < instructions.size() - 1) {
-                int instruction = instructions.get(instance.instructionPointer);
-                int operand = instructions.get(instance.instructionPointer + 1);
-                switch (instruction) {
-                    case 0:
-                        instance.adv(operand);
-                        break;
-                    case 1:
-                        instance.bxk(operand);
-                        break;
-                    case 2:
-                        instance.bst(operand);
-                        break;
-                    case 3:
-                        instance.jnz(operand);
-                        break;
-                    case 4:
-                        instance.bxc();
-                        break;
-                    case 5:
-                        instance.out(operand);
-                        break;
-                    case 6:
-                        instance.bdv(operand);
-                        break;
-                    case 7:
-                        instance.cdv(operand);
-                        break;
-                }
-                instance.instructionPointer++;
-                instance.instructionPointer++;
+        while (instance.instructionPointer < instructions.size() - 1) {
+            int instruction = instructions.get(instance.instructionPointer);
+            int operand = instructions.get(instance.instructionPointer + 1);
+            switch (instruction) {
+                case 0:
+                    instance.adv(operand);
+                    break;
+                case 1:
+                    instance.bxk(operand);
+                    break;
+                case 2:
+                    instance.bst(operand);
+                    break;
+                case 3:
+                    instance.jnz(operand);
+                    break;
+                case 4:
+                    instance.bxc();
+                    break;
+                case 5:
+                    instance.out(operand);
+                    break;
+                case 6:
+                    instance.bdv(operand);
+                    break;
+                case 7:
+                    instance.cdv(operand);
+                    break;
             }
-
-            // -1 because of ',' at the end
-            if (instance.out.substring(0, instance.out.length() - 1).equals(goal)) {
-                System.out.println(result);
-                return;
-            }
-            /*
-            System.out.println(result);
-            System.out.println(instance.out);
-            System.out.println();
-            */
-            result++;
+            instance.instructionPointer++;
+            instance.instructionPointer++;
         }
-    }
-
-    D17(int registerA, int registerB, int registerC) {
-        this.registerA = registerA;
-        this.registerB = registerB;
-        this.registerC = registerC;
+        System.out.println("Result: " + instance.out.substring(0, instance.out.length() - 1));
     }
 
     private void adv(int operand) {
@@ -136,6 +118,6 @@ public class D17 {
         if (operand == 6) {
             return this.registerC;
         }
-        throw new RuntimeException("Unsupported operand 7");
+        throw new RuntimeException("Unsupported operand : " + operand);
     }
 }
