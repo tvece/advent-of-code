@@ -8,7 +8,7 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
-public class D17 {
+public class D17P1 {
     int registerA;
     int registerB;
     int registerC;
@@ -25,7 +25,7 @@ public class D17 {
         } catch (IOException e) {
             throw new RuntimeException("Failed to read input data!", e);
         }
-        D17 instance = new D17();
+        D17P1 instance = new D17P1();
         int defaultB = Integer.parseInt(input.get(1).substring("Register B: ".length()));
         int defaultC = Integer.parseInt(input.get(2).substring("Register C: ".length()));
         instance.registerA = Integer.parseInt(input.get(0).substring("Register A: ".length()));
@@ -64,8 +64,7 @@ public class D17 {
                     instance.cdv(operand);
                     break;
             }
-            instance.instructionPointer++;
-            instance.instructionPointer++;
+            instance.instructionPointer += 2;
         }
         System.out.println("Result: " + instance.out.substring(0, instance.out.length() - 1));
     }
