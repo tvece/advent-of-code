@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class D07 {
+public class D07P1 {
     public static void main(String[] args) {
         Path filePath = Paths.get("src/main/resources/2024/D07.txt");
         List<Long> correctResults = new ArrayList<>();
@@ -31,7 +31,6 @@ public class D07 {
         long sum = 0;
         for (long correctResult : correctResults) {
             sum += correctResult;
-            //System.out.println(correctResult);
         }
         System.out.println(sum);
     }
@@ -48,18 +47,8 @@ public class D07 {
         }
         long nextValue = values.get(nextValueIndex);
         nextValueIndex++;
-        int magnitude = 0;
-        long magnitudeResolver = nextValue;
-        while (magnitudeResolver > 0) {
-            magnitude++;
-            magnitudeResolver = magnitudeResolver / 10;
-        }
-
-        //System.out.println("   " + currentValue + " || " + nextValue + " = " + ((currentValue * (long) Math.pow((long) 10, magnitude)) + nextValue) + "_" + magnitude);
-
 
         return isValid(expectedValue, values, currentValue + nextValue, nextValueIndex)
-                || isValid(expectedValue, values, currentValue * nextValue, nextValueIndex)
-                || isValid(expectedValue, values, (currentValue * (long) Math.pow((long) 10, magnitude)) + nextValue, nextValueIndex);
+                || isValid(expectedValue, values, currentValue * nextValue, nextValueIndex);
     }
 }
