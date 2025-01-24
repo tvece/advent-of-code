@@ -8,7 +8,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-public class D09 {
+public class D09P2 {
     public static void main(String[] args) {
         Path filePath = Paths.get("src/main/resources/2024/D09.txt");
         String input;
@@ -17,7 +17,6 @@ public class D09 {
         } catch (IOException e) {
             throw new RuntimeException("Failed to read input data!", e);
         }
-        System.out.println(input.length());
         List<File> disk = new ArrayList<>();
         boolean isSpace = false;
         int fileCounter = 0;
