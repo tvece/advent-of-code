@@ -10,7 +10,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class D11 {
+public class D11P12 {
+
+    // PART 1
+    public static final int CYCLES = 25;
+    // PART 2
+    //public static final int CYCLES = 75;
+
     public static void main(String[] args) {
         Path filePath = Paths.get("src/main/resources/2024/D11.txt");
         String input;
@@ -27,8 +33,7 @@ public class D11 {
             updateCountMap(stoneCount, Long.parseLong(part), 1);
         }
         Map<Long, ValueTransformationCacheItem> valueTransformationCache = new HashMap<>();
-        int cycles = 75;
-        for (int i = 0; i < cycles; i++) {
+        for (int i = 0; i < CYCLES; i++) {
             HashMap<Long, Long> nextStoneCount = new HashMap<>();
             for (Long stone : stoneCount.keySet()) {
                 if (valueTransformationCache.containsKey(stone)) {
