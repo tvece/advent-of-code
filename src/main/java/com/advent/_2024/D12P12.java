@@ -7,7 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
-public class D12 {
+public class D12P12 {
     public static void main(String[] args) {
         Path filePath = Paths.get("src/main/resources/2024/D12.txt");
         List<String> map;
