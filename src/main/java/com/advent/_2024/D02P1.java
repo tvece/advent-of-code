@@ -8,7 +8,7 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
-public class D02 {
+public class D02P1 {
     public static void main(String[] args) {
         Path filePath = Paths.get("src/main/resources/2024/D02.txt");
         List<String> lines;
@@ -19,21 +19,22 @@ public class D02 {
         }
         int result = 0;
         for (String line : lines) {
-            result += (isValidReport(Arrays.stream(line.split(" ")).mapToInt(Integer::valueOf).toArray(), true)) ? 1 : 0;
-            System.out.println(line + " " + isValidReport(Arrays.stream(line.split(" ")).mapToInt(Integer::valueOf).toArray(), true));
+            boolean isValidReport = isValidReport(Arrays.stream(line.split(" ")).mapToInt(Integer::valueOf).toArray());
+            result += isValidReport ? 1 : 0;
+            System.out.println(line + " " + isValidReport);
         }
 
         System.out.print(result);
     }
 
-    private static boolean isValidReport(int[] report, boolean isRoot) {
+    private static boolean isValidReport(int[] report) {
         if (report.length < 3) {
             throw new RuntimeException("report " + Arrays.toString(report) + " is invalid! only three or more numbers are supported.");
         }
         int dif = report[0] - report[1];
-        boolean result = true;
+
         if (dif == 0 || dif > 3 || dif < -3) {
-            result = false;
+            return false;
         }
 
         boolean isDescending = dif > 0;
@@ -41,31 +42,17 @@ public class D02 {
         for (int i = 1; i < report.length - 1; i++) {
             int dif2 = report[i] - report[i + 1];
             if (dif2 == 0) {
-                result = false;
+                return false;
             }
 
             if (isDescending && (dif2 > 3 || dif2 < 1)) {
-                result = false;
+                return false;
             }
 
             if (!isDescending && (dif2 < -3 || dif2 > -1)) {
-                result = false;
+                return false;
             }
         }
-        if (!result && isRoot) {
-            for (int i = 0; i < report.length; i++) {
-                int[] subArray = new int[report.length - 1];
-                System.arraycopy(report, 0, subArray, 0, i);
-                System.arraycopy(report, i + 1, subArray, i, report.length - 1 - i);
-
-                boolean subResult = isValidReport(subArray, false);
-                if (subResult) {
-                    return true;
-                }
-            }
-            return false;
-        } else {
-            return result;
-        }
+        return true;
     }
 }
