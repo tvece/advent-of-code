@@ -10,7 +10,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class D06 {
+public class D06P12 {
     public static void main(String[] args) {
         Path filePath = Paths.get("src/main/resources/2024/D06.txt");
         List<String> rows;
@@ -32,7 +32,7 @@ public class D06 {
 
         RunResult firstRun = run(rows, startPosition);
         int result = 0;
-        System.out.println(firstRun.uniquePositions().size());
+        System.out.println("Part1: " + firstRun.uniquePositions().size());
         int numberOfRuns = 0;
         for (String uniquePosition : firstRun.uniquePositions()) {
             numberOfRuns += 1;
@@ -51,7 +51,7 @@ public class D06 {
             row = row.substring(0, replaceIndex) + "." + row.substring(replaceIndex + 1);
             rows.set(rowIndex, row);
         }
-        System.out.println(result);
+        System.out.println("Part 2: " + result);
     }
 
     private static RunResult run(List<String> rows, int[] startPosition) {
@@ -95,6 +95,6 @@ public class D06 {
         return new RunResult(history, uniquePositions, isLoop);
     }
 
-    private static record RunResult(List<String> history, Set<String> uniquePositions, boolean isLoop) {
+    private record RunResult(List<String> history, Set<String> uniquePositions, boolean isLoop) {
     }
 }
