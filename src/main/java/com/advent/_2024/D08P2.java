@@ -7,7 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
-public class D08 {
+public class D08P2 {
     public static void main(String[] args) {
         Path filePath = Paths.get("src/main/resources/2024/D08.txt");
         List<String> rows;
@@ -32,7 +32,6 @@ public class D08 {
             }
         }
 
-        System.out.println(toBeProcessed);
 
         Set<Location> result = new HashSet<>();
         for (Character c : toBeProcessed.keySet()) {
@@ -41,7 +40,6 @@ public class D08 {
                 for (int secondLocationIndex = firstLocationIndex + 1; secondLocationIndex < locations.size(); secondLocationIndex++) {
                     Location locationA = locations.get(firstLocationIndex);
                     Location locationB = locations.get(secondLocationIndex);
-                    System.out.println(locationA + " | " + locationB);
 
                     result.add(locationA);
                     result.add(locationB);
@@ -53,7 +51,6 @@ public class D08 {
                     while (currentX >= 0 && currentY >= 0 &&
                             currentX < rows.getFirst().length() && currentY < rows.size()) {
                         result.add(new Location(currentX, currentY));
-                        System.out.println(new Location(currentX, currentY));
                         currentX = currentX + diffX;
                         currentY = currentY + diffY;
                     }
@@ -64,24 +61,11 @@ public class D08 {
                     while (currentX >= 0 && currentY >= 0 &&
                             currentX < rows.getFirst().length() && currentY < rows.size()) {
                         result.add(new Location(currentX, currentY));
-                        System.out.println(new Location(currentX, currentY));
                         currentX = currentX + diffX;
                         currentY = currentY + diffY;
                     }
-                    System.out.println();
                 }
             }
-        }
-
-        for (int x = 0; x < rows.size(); x++) {
-            for (int y = 0; y < rows.getFirst().length(); y++) {
-                if (result.contains(new Location(x, y))) {
-                    System.out.print('#');
-                } else {
-                    System.out.print(rows.get(x).charAt(y));
-                }
-            }
-            System.out.print('\n');
         }
 
         System.out.println(result.size());
