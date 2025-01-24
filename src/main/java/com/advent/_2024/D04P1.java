@@ -7,7 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
-public class D04 {
+public class D04P1 {
     public static void main(String[] args) {
         Path filePath = Paths.get("src/main/resources/2024/D04.txt");
         List<String> rows;
@@ -17,39 +17,8 @@ public class D04 {
             throw new RuntimeException("Failed to read input data!", e);
         }
         int result = 0;
-        for (int rowIndex = 1; rowIndex < (rows.size() - 1); rowIndex++) {
+        for (int rowIndex = 0; rowIndex < rows.size(); rowIndex++) {
             String row = rows.get(rowIndex);
-            //PART 2
-            for (int columnIndex = 1; columnIndex < (row.length() - 1); columnIndex++) {
-                char character = row.charAt(columnIndex);
-
-
-                if (character == 'A') {
-                    //+
-                    if (     //vertical
-                            ((rows.get(rowIndex - 1).charAt(columnIndex) == 'M' && (rows.get(rowIndex + 1).charAt(columnIndex) == 'S')) ||
-                                    (rows.get(rowIndex - 1).charAt(columnIndex) == 'S' && (rows.get(rowIndex + 1).charAt(columnIndex) == 'M'))) &&
-                                    // horizontal
-                                    ((rows.get(rowIndex).charAt(columnIndex - 1) == 'M' && (rows.get(rowIndex).charAt(columnIndex - 1) == 'S')) ||
-                                            (rows.get(rowIndex).charAt(columnIndex - 1) == 'S' && (rows.get(rowIndex).charAt(columnIndex - 1) == 'M')))
-                    ) {
-                        result++;
-                    }
-                    if (    //upper start
-                            ((rows.get(rowIndex - 1).charAt(columnIndex - 1) == 'M' && (rows.get(rowIndex + 1).charAt(columnIndex + 1) == 'S')) ||
-                                    (rows.get(rowIndex - 1).charAt(columnIndex - 1) == 'S' && (rows.get(rowIndex + 1).charAt(columnIndex + 1) == 'M'))) &&
-                                    // lower start
-                                    ((rows.get(rowIndex + 1).charAt(columnIndex - 1) == 'M' && (rows.get(rowIndex - 1).charAt(columnIndex + 1) == 'S')) ||
-                                            (rows.get(rowIndex + 1).charAt(columnIndex - 1) == 'S' && (rows.get(rowIndex - 1).charAt(columnIndex + 1) == 'M')))
-                    ) {
-                        result++;
-                    }
-
-                    //X
-                }
-            }
-            /*
-            //PART 1
             for (int columnIndex = 0; columnIndex < row.length(); columnIndex++) {
                 char character = row.charAt(columnIndex);
 
@@ -144,7 +113,6 @@ public class D04 {
                     }
                 }
             }
-        */
         }
         System.out.println(result);
     }
