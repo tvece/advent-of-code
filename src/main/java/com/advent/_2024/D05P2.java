@@ -12,7 +12,8 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Stream;
 
-public class D05 {
+public class D05P2 {
+
     public static void main(String[] args) {
         Path filePath = Paths.get("src/main/resources/2024/D05.txt");
         HashMap<String, List<String>> instructions = new HashMap<>();
