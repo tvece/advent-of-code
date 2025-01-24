@@ -8,7 +8,7 @@ import java.nio.file.Paths;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class D03 {
+public class D03P2 {
     public static void main(String[] args) {
         Path filePath = Paths.get("src/main/resources/2024/D03.txt");
         String input;
