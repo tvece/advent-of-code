@@ -5,9 +5,11 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-public class D01 {
+public class D01P1 {
     public static void main(String[] args) {
         Path filePath = Paths.get("src/main/resources/2024/D01.txt");
         List<String> lines;
@@ -16,7 +18,7 @@ public class D01 {
         } catch (IOException e) {
             throw new RuntimeException("Failed to read input data!", e);
         }
-        Set<Integer> firstColumn = new HashSet<>();
+        List<Integer> firstColumn = new ArrayList<>();
         List<Integer> secondColumn = new ArrayList<>();
         lines.forEach(line -> {
             String[] split = line.split("\\s+");
@@ -24,12 +26,12 @@ public class D01 {
             secondColumn.add(Integer.valueOf(split[1]));
         });
 
-        Integer[] values = new Integer[firstColumn.size()];
-        firstColumn.toArray(values);
+        Collections.sort(firstColumn);
+        Collections.sort(secondColumn);
 
         long result = 0;
-        for (Integer value : values) {
-            result += ((long) value * Collections.frequency(secondColumn, value));
+        for (int i = 0; i < firstColumn.size(); i++) {
+            result += Math.abs(firstColumn.get(i) - secondColumn.get(i));
         }
 
         System.out.printf("%d", result);
