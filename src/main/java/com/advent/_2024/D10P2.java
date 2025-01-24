@@ -7,7 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
-public class D10 {
+public class D10P2 {
     public static void main(String[] args) {
         Path filePath = Paths.get("src/main/resources/2024/D10.txt");
         List<String> input;
@@ -28,10 +28,8 @@ public class D10 {
         for (int rowIndex = 0; rowIndex < map.length; rowIndex++) {
             for (int columnIndex = 0; columnIndex < map[0].length; columnIndex++) {
                 if (map[rowIndex][columnIndex] == 0) {
-                    System.out.println("[" + rowIndex + "," + columnIndex + "]");
                     int currentCount = getTrails(map, rowIndex, columnIndex, 0, "");
                     totalCount += currentCount;
-                    System.out.println();
                 }
 
             }
@@ -54,7 +52,6 @@ public class D10 {
         }
         // top of the trail
         if (map[rowIndex][columnIndex] == 9) {
-            System.out.println(sequence + "[" + rowIndex + "," + columnIndex + "]");
             return 1;
         }
         // inspect neighbors
