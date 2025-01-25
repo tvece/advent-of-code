@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Stream;
 
-public class D15 {
+public class D15P2 {
     public static void main(String[] args) {
         Path filePath = Paths.get("src/main/resources/2024/D15.txt");
         List<char[]> map = new ArrayList<>();
