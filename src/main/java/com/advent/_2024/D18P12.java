@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.PriorityQueue;
 
-public class D18 {
+public class D18P12 {
     final static int ROWS = 71;
     final static int COLUMNS = 71;
     final static int BYTES = 2994;
@@ -61,14 +61,14 @@ public class D18 {
 
                 if (newDistance < distances[nextColumn][nextRow]) {
                     distances[nextColumn][nextRow] = newDistance;
-                    pq.add(new D18.Node(nextColumn, nextRow, newDistance));
+                    pq.add(new D18P12.Node(nextColumn, nextRow, newDistance));
                 }
             }
         }
         System.out.println("No path found.\nBytes:" + BYTES + "\nLast byte coordinates: " + input.get(BYTES - 1));
     }
 
-    private static class Node implements Comparable<D18.Node> {
+    private static class Node implements Comparable<D18P12.Node> {
         int row;
         int column;
         int distance;
@@ -80,7 +80,7 @@ public class D18 {
         }
 
         @Override
-        public int compareTo(D18.Node other) {
+        public int compareTo(D18P12.Node other) {
             return Integer.compare(this.distance, other.distance);
         }
     }
