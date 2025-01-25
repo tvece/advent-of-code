@@ -8,7 +8,12 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-public class D13 {
+public class D13P12 {
+
+    // Part1
+    private static final long CORRECTION = 0;
+    // Part 2
+    //private static final long CORRECTION = 10000000000000L;
 
     private static final String BUTTON_A_PREFIX = "Button A: X";
     private static final String BUTTON_B_PREFIX = "Button B: X";
@@ -35,8 +40,8 @@ public class D13 {
                 readingMachine.xIncrementB = Integer.parseInt(line.substring(0, line.indexOf(",")));
                 readingMachine.YIncrementB = Integer.parseInt(line.substring(line.indexOf("Y") + 1));
             } else if (line.startsWith("Prize: ")) {
-                readingMachine.prizeX = Long.parseLong(line.substring(line.indexOf("X") + 2, line.indexOf(","))) + 10000000000000L;
-                readingMachine.prizeY = Long.parseLong(line.substring(line.indexOf("Y=") + 2)) + 10000000000000L;
+                readingMachine.prizeX = Long.parseLong(line.substring(line.indexOf("X") + 2, line.indexOf(","))) + CORRECTION;
+                readingMachine.prizeY = Long.parseLong(line.substring(line.indexOf("Y=") + 2)) + CORRECTION;
                 machines.add(readingMachine);
             }
         }
