@@ -11,9 +11,14 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
-public class D14 {
+public class D14P12 {
     private static final int width = 101;
     private static final int height = 103;
+
+    // Part 1
+    //private static final boolean isPart1 = true;
+    // Part 2 - increase the seconds and print position after each second;
+    private static final boolean isPart1 = false;
 
     public static void main(String[] args) {
         Path filePath = Paths.get("src/main/resources/2024/D14.txt");
@@ -36,13 +41,19 @@ public class D14 {
         } catch (IOException e) {
             throw new RuntimeException("Failed to read input data!", e);
         }
-        for (int i = 0; i < 10000; i++) {
+        int seconds;
+        if (isPart1) {
+            seconds = 100;
+        } else {
+            seconds = 10000;
+        }
+        for (int i = 0; i < seconds; i++) {
             Set<Position> robotPositions = new HashSet<>();
             for (Robot robot : robots) {
                 robot.move();
                 robotPositions.add(robot.getPosition());
             }
-            if (i > 500) {
+            if (!isPart1 && i > 500) {
                 System.out.println("Run: " + (i + 1));
                 for (int column = 0; column < width; column++) {
                     for (int row = 0; row < height; row++) {
@@ -65,7 +76,7 @@ public class D14 {
         for (int i = 1; i < quadrants.length; i++) {
             result = result * quadrants[i];
         }
-        System.out.println(result);
+        System.out.println("safety factor: " + result);
 
     }
 
