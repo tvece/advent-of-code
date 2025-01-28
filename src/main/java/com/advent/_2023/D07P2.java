@@ -5,17 +5,14 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
-public class D07 {
+public class D07P2 {
 
     public static void main(String[] args) {
         Path filePath = Paths.get("src/main/resources/2023/D07.txt");
-        List<String> lines = new ArrayList<String>();
+        List<String> lines;
         try {
             lines = Files.readAllLines(filePath, StandardCharsets.UTF_8);
         } catch (IOException e) {
@@ -29,7 +26,7 @@ public class D07 {
             System.out.println(hand.inputCards + " " + hand.type + " " + hand.bid + "*" + index);
             result += ((long) hand.bid * index++);
         }
-        System.out.printf("%d\n", result);
+        System.out.println(result);
     }
 
     private static class Hand implements Comparable<Hand> {
@@ -47,7 +44,7 @@ public class D07 {
         }
 
         private void setCards(String charRepresentation) {
-            cards = new ArrayList<Integer>();
+            cards = new ArrayList<>();
             for (Character character : charRepresentation.toCharArray()) {
                 switch (character) {
                     case 'A':
@@ -89,10 +86,8 @@ public class D07 {
         private Integer getType() {
             LinkedHashMap<Integer, Long> groups = cards.stream()
                     .collect(Collectors.groupingBy(c -> c, LinkedHashMap::new, Collectors.counting()));
-            // List<Object> uniqueValues = Arrays.asList((groups.keySet().toArray()));
             int jokersCount = (int) (groups.containsKey(1) ? groups.get(1) : 0);
-            List<Long> counters = groups.values().stream().map(c -> (Long) c).collect(Collectors.toList());
-            counters.sort((a, b) -> b.compareTo(a));
+            List<Long> counters = groups.values().stream().sorted(Comparator.reverseOrder()).toList();
 
             if (counters.size() == 1 || (jokersCount > 0 && counters.size() == 2)) {
                 // Five of a kind, where all five cards have the same label: AAAAA
