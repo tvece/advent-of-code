@@ -8,7 +8,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-public class D10 {
+public class D10P12 {
 
     public static void main(String[] args) {
         Path filePath = Paths.get("src/main/resources/2023/D10.txt");
