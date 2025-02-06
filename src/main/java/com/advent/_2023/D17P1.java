@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.PriorityQueue;
 
-public class D17 {
+public class D17P1 {
 
     public static void main(String[] args) throws InterruptedException {
         Path filePath = Paths.get("src/main/resources/2023/D17.txt");
@@ -81,20 +81,16 @@ public class D17 {
                     nextDirections = "RD";
                     break;
                 case 'R':
-                    nextDirections = currentNode.streak < 10 ? "R" : "";
-                    nextDirections += currentNode.streak >= 4 ? "UD" : "";
+                    nextDirections = currentNode.streak < 3 ? "RUD" : "UD";
                     break;
                 case 'D':
-                    nextDirections = currentNode.streak < 10 ? "D" : "";
-                    nextDirections += currentNode.streak >= 4 ? "RL" : "";
+                    nextDirections = currentNode.streak < 3 ? "LDR" : "LR";
                     break;
                 case 'L':
-                    nextDirections = currentNode.streak < 10 ? "L" : "";
-                    nextDirections += currentNode.streak >= 4 ? "UD" : "";
+                    nextDirections = currentNode.streak < 3 ? "ULD" : "UD";
                     break;
                 case 'U':
-                    nextDirections = currentNode.streak < 10 ? "U" : "";
-                    nextDirections += currentNode.streak >= 4 ? "LR" : "";
+                    nextDirections = currentNode.streak < 3 ? "LUR" : "LR";
                     break;
                 default:
                     throw new RuntimeException("Unsupported direction" + currentNode.direction);
