@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
+// https://www.youtube.com/watch?v=9UOMZSL0JTg
 public class D21P12 {
 
     static int TARGET_STEPS_1 = 64;
