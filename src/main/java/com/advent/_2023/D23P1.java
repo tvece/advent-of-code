@@ -9,7 +9,8 @@ import java.util.List;
 import java.util.Queue;
 
 public class D23P1 {
-    static int ROWS, COLUMNS;
+    static int HEIGHT;
+    static int WIDTH;
     static char[][] map;
     static int maxSteps = -1;
     static int[][] directions = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
@@ -21,16 +22,16 @@ public class D23P1 {
         } catch (IOException e) {
             throw new RuntimeException("Failed to read input data!", e);
         }
-        ROWS = lines.size();
-        COLUMNS = lines.getFirst().length();
-        map = new char[ROWS][COLUMNS];
-        for (int i = 0; i < ROWS; i++) {
+        HEIGHT = lines.size();
+        WIDTH = lines.getFirst().length();
+        map = new char[HEIGHT][WIDTH];
+        for (int i = 0; i < HEIGHT; i++) {
             map[i] = lines.get(i).toCharArray();
         }
 
         // find start
         int startRow = 0, startColumn = -1;
-        for (int j = 0; j < COLUMNS; j++) {
+        for (int j = 0; j < WIDTH; j++) {
             if (map[0][j] == '.') {
                 startColumn = j;
                 break;
@@ -42,10 +43,10 @@ public class D23P1 {
         }
 
         // find end
-        int endRow = ROWS - 1;
+        int endRow = HEIGHT - 1;
         int endColumn = -1;
-        for (int j = 0; j < COLUMNS; j++) {
-            if (map[ROWS - 1][j] == '.') {
+        for (int j = 0; j < WIDTH; j++) {
+            if (map[HEIGHT - 1][j] == '.') {
                 endColumn = j;
                 break;
             }
@@ -55,7 +56,7 @@ public class D23P1 {
             return;
         }
 
-        boolean[][] visited = new boolean[ROWS][COLUMNS];
+        boolean[][] visited = new boolean[HEIGHT][WIDTH];
         visited[startRow][startColumn] = true;
         dfs(startRow, startColumn, 0, endRow, endColumn, visited);
 
@@ -101,7 +102,7 @@ public class D23P1 {
      * Flood fill to count the number of unvisited, reachable walkable cells.
      */
     static int floodFillCount(int startRow, int startColumn, boolean[][] visited) {
-        boolean[][] seen = new boolean[ROWS][COLUMNS];
+        boolean[][] seen = new boolean[HEIGHT][WIDTH];
         Queue<int[]> queue = new LinkedList<>();
         queue.add(new int[]{startRow, startColumn});
         seen[startRow][startColumn] = true;
@@ -127,7 +128,7 @@ public class D23P1 {
     }
 
     static boolean isInMap(int row, int column) {
-        return row >= 0 && row < ROWS && column >= 0 && column < COLUMNS;
+        return row >= 0 && row < HEIGHT && column >= 0 && column < WIDTH;
     }
 
     static boolean isWalkable(int row, int column) {
