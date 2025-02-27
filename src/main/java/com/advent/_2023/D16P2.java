@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
+// https://adventofcode.com/2023/day/16
 public class D16P2 {
 
     public static void main(String[] args) throws InterruptedException {

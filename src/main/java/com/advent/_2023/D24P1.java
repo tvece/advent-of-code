@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
+// https://adventofcode.com/2023/day/24
 public class D24P1 {
 
     public static void main(String[] args) {

@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
+// https://adventofcode.com/2024/day/20
 public class D20P12 {
     // PART 2
     // maximum ps for cheat

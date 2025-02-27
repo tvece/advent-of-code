@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+// https://adventofcode.com/2024/day/6
 public class D06P12 {
     public static void main(String[] args) {
         Path filePath = Paths.get("../advent-of-code-input/2024/D06.txt");

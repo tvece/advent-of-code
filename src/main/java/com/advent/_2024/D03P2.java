@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+// https://adventofcode.com/2024/day/3
 public class D03P2 {
     public static void main(String[] args) {
         Path filePath = Paths.get("../advent-of-code-input/2024/D03.txt");

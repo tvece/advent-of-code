@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+// https://adventofcode.com/2023/day/3
 public class D03P1 {
     public static void main(String[] args) {
         Path filePath = Paths.get("../advent-of-code-input/2023/D03.txt");

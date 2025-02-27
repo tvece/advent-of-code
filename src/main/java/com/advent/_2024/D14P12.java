@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
+// https://adventofcode.com/2024/day/14
 public class D14P12 {
     private static final int width = 101;
     private static final int height = 103;

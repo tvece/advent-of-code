@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+// https://adventofcode.com/2023/day/13
 public class D13P1 {
 
     public static void main(String[] args) {

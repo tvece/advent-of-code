@@ -10,6 +10,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+// https://adventofcode.com/2024/day/11
+
 public class D11P12 {
 
     // PART 1

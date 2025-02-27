@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
+// https://adventofcode.com/2023/day/22
 public class D22P12 {
     public static void main(String[] args) throws InterruptedException {
         Path filePath = Paths.get("../advent-of-code-input/2023/D22.txt");

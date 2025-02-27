@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+// https://adventofcode.com/2024/day/17
 // logic is based on observing how result changes based on input
 public class D17P2 {
 

@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
+// https://adventofcode.com/2023/day/20
 public class D20P2 {
 
     public static final int LOW = 0;

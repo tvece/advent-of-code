@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+// https://adventofcode.com/2024/day/7
 public class D07P2 {
     public static void main(String[] args) {
         Path filePath = Paths.get("../advent-of-code-input/2024/D07.txt");

@@ -10,8 +10,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
+// https://adventofcode.com/2024/day/23
 public class D23P1 {
-
     public static void main(String[] args) {
         long startTime = System.currentTimeMillis();
         Path filePath = Paths.get("../advent-of-code-input/2024/D23.txt");

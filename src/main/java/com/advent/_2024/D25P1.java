@@ -10,6 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Stream;
 
+// https://adventofcode.com/2024/day/25
 public class D25P1 {
     public static void main(String[] args) {
         long startTime = System.currentTimeMillis();

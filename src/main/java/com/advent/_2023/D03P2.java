@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+// https://adventofcode.com/2023/day/3
 public class D03P2 {
 
     public static void main(String[] args) {

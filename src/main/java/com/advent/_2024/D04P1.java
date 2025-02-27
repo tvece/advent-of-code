@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
+// https://adventofcode.com/2024/day/4
 public class D04P1 {
     public static void main(String[] args) {
         Path filePath = Paths.get("../advent-of-code-input/2024/D04.txt");

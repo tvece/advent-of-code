@@ -10,8 +10,8 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
+// https://adventofcode.com/2024/day/24
 public class D24P1 {
-
     public static void main(String[] args) {
         long startTime = System.currentTimeMillis();
         Path filePath = Paths.get("../advent-of-code-input/2024/D24.txt");

@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+// https://adventofcode.com/2023/day/15
 public class D15P2 {
 
     public static void main(String[] args) {

@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Stream;
 
+// https://adventofcode.com/2024/day/15
 public class D15P1 {
     public static void main(String[] args) {
         Path filePath = Paths.get("../advent-of-code-input/2024/D15.txt");

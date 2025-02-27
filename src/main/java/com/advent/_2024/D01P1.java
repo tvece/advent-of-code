@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+// https://adventofcode.com/2024/day/1
 public class D01P1 {
     public static void main(String[] args) {
         Path filePath = Paths.get("../advent-of-code-input/2024/D01.txt");

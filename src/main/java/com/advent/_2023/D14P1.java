@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
+// https://adventofcode.com/2023/day/14
 public class D14P1 {
 
     public static void main(String[] args) {

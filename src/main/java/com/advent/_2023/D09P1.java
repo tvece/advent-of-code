@@ -11,6 +11,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Stream;
 
+// https://adventofcode.com/2023/day/9
 public class D09P1 {
 
     public static void main(String[] args) {

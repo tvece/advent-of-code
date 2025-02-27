@@ -8,8 +8,8 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Stream;
 
+// https://adventofcode.com/2024/day/23
 public class D23P2 {
-
     public static void main(String[] args) {
         long startTime = System.currentTimeMillis();
         Path filePath = Paths.get("../advent-of-code-input/2024/D23.txt");

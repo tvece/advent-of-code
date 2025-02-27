@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
+// https://adventofcode.com/2023/day/23
 public class D23P1 {
     static int HEIGHT;
     static int WIDTH;

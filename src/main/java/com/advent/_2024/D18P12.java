@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.PriorityQueue;
 
+// https://adventofcode.com/2024/day/18
 public class D18P12 {
     final static int ROWS = 71;
     final static int COLUMNS = 71;

@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
+// https://adventofcode.com/2024/day/22
 public class D22P2 {
     public static void main(String[] args) {
         long startTime = System.currentTimeMillis();

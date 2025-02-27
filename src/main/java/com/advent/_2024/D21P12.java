@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 
+// https://adventofcode.com/2024/day/21
 public class D21P12 {
 
     // PART 1

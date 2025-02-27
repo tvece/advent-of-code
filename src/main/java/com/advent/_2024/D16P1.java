@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.PriorityQueue;
 
+// https://adventofcode.com/2024/day/16
 public class D16P1 {
     public static void main(String[] args) {
         Path filePath = Paths.get("../advent-of-code-input/2024/D16.txt");

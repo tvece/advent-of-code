@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Stream;
 
+// https://adventofcode.com/2023/day/12
 public class D12P12 {
 
     public static void main(String[] args) {

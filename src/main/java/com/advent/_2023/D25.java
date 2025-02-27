@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 
+// https://adventofcode.com/2023/day/25
 public class D25 {
 
     static final int WIRES_TO_CUT = 3;

@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
+// https://adventofcode.com/2023/day/14
 public class D14P2 {
 
     // part 2 is slow but since there is repeating pattern after some initial

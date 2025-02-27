@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.util.Iterator;
 import java.util.stream.Stream;
 
+// https://adventofcode.com/2023/day/2
 public class D02P2 {
 
     public static void main(String[] args) {

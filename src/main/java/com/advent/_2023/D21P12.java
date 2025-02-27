@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
+// https://adventofcode.com/2023/day/21
 // https://www.youtube.com/watch?v=9UOMZSL0JTg
 public class D21P12 {
 

@@ -22,9 +22,8 @@ fhg  z17
 fsq  dvb
 
  */
-
+// https://adventofcode.com/2024/day/24
 public class D24P2 {
-
     public static void main(String[] args) {
         long startTime = System.currentTimeMillis();
         Path filePath = Paths.get("../advent-of-code-input/2024/D24.txt");

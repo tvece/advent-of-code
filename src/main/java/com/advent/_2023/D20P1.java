@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Stream;
 
+// https://adventofcode.com/2023/day/20
 public class D20P1 {
 
     private static final String FALLBACK = "FALLBACK";

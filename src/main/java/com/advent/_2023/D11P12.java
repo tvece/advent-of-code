@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+// https://adventofcode.com/2023/day/11
 public class D11P12 {
 
     // part 1

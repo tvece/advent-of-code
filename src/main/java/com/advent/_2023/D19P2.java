@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+// https://adventofcode.com/2023/day/19
 public class D19P2 {
 
     final static String ACCEPTED = "A";

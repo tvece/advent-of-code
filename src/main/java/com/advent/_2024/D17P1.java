@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
+// https://adventofcode.com/2024/day/17
 public class D17P1 {
     int registerA;
     int registerB;
