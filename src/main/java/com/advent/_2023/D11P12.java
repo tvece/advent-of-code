@@ -18,7 +18,7 @@ public class D11P12 {
     //private static final int GAP_SIZE = 999999;
 
     public static void main(String[] args) {
-        Path filePath = Paths.get("src/main/resources/2023/D11.txt");
+        Path filePath = Paths.get("../advent-of-code-input/2023/D11.txt");
         List<String> rows;
         try {
             rows = Files.readAllLines(filePath, StandardCharsets.UTF_8);

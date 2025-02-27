@@ -13,7 +13,7 @@ public class D24P1 {
     public static void main(String[] args) {
         List<Hailstone> stones = new ArrayList<>();
 
-        try (Stream<String> lines = Files.lines(Paths.get("src/main/resources/2023/D24.txt"), StandardCharsets.UTF_8)) {
+        try (Stream<String> lines = Files.lines(Paths.get("../advent-of-code-input/2023/D24.txt"), StandardCharsets.UTF_8)) {
             lines.forEach(line -> stones.add(new Hailstone(line)));
         } catch (IOException e) {
             throw new RuntimeException("Failed to read input data!", e);

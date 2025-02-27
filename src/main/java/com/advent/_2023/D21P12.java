@@ -14,7 +14,7 @@ public class D21P12 {
     static int TARGET_STEPS_2 = 26501365;
 
     public static void main(String[] args) throws InterruptedException {
-        Path filePath = Paths.get("src/main/resources/2023/D21.txt");
+        Path filePath = Paths.get("../advent-of-code-input/2023/D21.txt");
         List<String> rows;
         try {
             rows = Files.readAllLines(filePath, StandardCharsets.UTF_8);

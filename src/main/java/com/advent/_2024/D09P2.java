@@ -10,7 +10,7 @@ import java.util.List;
 
 public class D09P2 {
     public static void main(String[] args) {
-        Path filePath = Paths.get("src/main/resources/2024/D09.txt");
+        Path filePath = Paths.get("../advent-of-code-input/2024/D09.txt");
         String input;
         try {
             input = Files.readString(filePath, StandardCharsets.UTF_8);

@@ -19,7 +19,7 @@ public class D20P2 {
     static long numberOfButtonPresses = 0;
 
     public static void main(String[] args) throws InterruptedException {
-        Path filePath = Paths.get("src/main/resources/2023/D20.txt");
+        Path filePath = Paths.get("../advent-of-code-input/2023/D20.txt");
         List<String> rows;
         try {
             rows = Files.readAllLines(filePath, StandardCharsets.UTF_8);

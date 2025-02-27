@@ -12,7 +12,7 @@ import java.util.List;
 public class D13P1 {
 
     public static void main(String[] args) {
-        Path filePath = Paths.get("src/main/resources/2023/D13.txt");
+        Path filePath = Paths.get("../advent-of-code-input/2023/D13.txt");
         List<String> stringRows;
         try {
             stringRows = Files.readAllLines(filePath, StandardCharsets.UTF_8);

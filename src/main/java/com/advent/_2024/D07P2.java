@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 
 public class D07P2 {
     public static void main(String[] args) {
-        Path filePath = Paths.get("src/main/resources/2024/D07.txt");
+        Path filePath = Paths.get("../advent-of-code-input/2024/D07.txt");
         List<Long> correctResults = new ArrayList<>();
         try (Stream<String> lines = Files.lines(filePath, StandardCharsets.UTF_8)) {
             lines.forEach(line -> {

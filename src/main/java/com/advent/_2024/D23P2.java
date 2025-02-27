@@ -12,7 +12,7 @@ public class D23P2 {
 
     public static void main(String[] args) {
         long startTime = System.currentTimeMillis();
-        Path filePath = Paths.get("src/main/resources/2024/D23.txt");
+        Path filePath = Paths.get("../advent-of-code-input/2024/D23.txt");
         Map<String, Set<String>> neighbors = new HashMap<>();
 
         try (Stream<String> lines = Files.lines(filePath, StandardCharsets.UTF_8)) {

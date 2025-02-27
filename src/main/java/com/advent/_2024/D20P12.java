@@ -23,7 +23,7 @@ public class D20P12 {
 
     public static void main(String[] args) {
         long startTime = System.currentTimeMillis();
-        Path filePath = Paths.get("src/main/resources/2024/D20.txt");
+        Path filePath = Paths.get("../advent-of-code-input/2024/D20.txt");
         char[][] input;
         try (Stream<String> lines = Files.lines(filePath, StandardCharsets.UTF_8)) {
             input = lines.map(String::toCharArray).toArray(char[][]::new);

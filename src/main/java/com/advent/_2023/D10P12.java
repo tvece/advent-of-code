@@ -11,7 +11,7 @@ import java.util.List;
 public class D10P12 {
 
     public static void main(String[] args) {
-        Path filePath = Paths.get("src/main/resources/2023/D10.txt");
+        Path filePath = Paths.get("../advent-of-code-input/2023/D10.txt");
         List<String> stringLines;
         try {
             stringLines = Files.readAllLines(filePath, StandardCharsets.UTF_8);

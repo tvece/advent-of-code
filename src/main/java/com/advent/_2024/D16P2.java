@@ -9,7 +9,7 @@ import java.util.*;
 
 public class D16P2 {
     public static void main(String[] args) {
-        Path filePath = Paths.get("src/main/resources/2024/D16.txt");
+        Path filePath = Paths.get("../advent-of-code-input/2024/D16.txt");
         List<String> map;
         try {
             map = Files.readAllLines(filePath, StandardCharsets.UTF_8);

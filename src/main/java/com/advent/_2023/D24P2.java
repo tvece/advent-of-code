@@ -13,7 +13,7 @@ public class D24P2 {
     public static void main(String[] args) {
         List<String> lines;
         try {
-            lines = Files.readAllLines(Paths.get("src/main/resources/2023/D24.txt"), StandardCharsets.UTF_8);
+            lines = Files.readAllLines(Paths.get("../advent-of-code-input/2023/D24.txt"), StandardCharsets.UTF_8);
         } catch (IOException e) {
             throw new RuntimeException("Failed to read input data!", e);
         }

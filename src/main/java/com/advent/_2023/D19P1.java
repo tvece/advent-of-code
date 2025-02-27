@@ -17,7 +17,7 @@ public class D19P1 {
     final static String INITIAL = "in";
 
     public static void main(String[] args) throws InterruptedException {
-        Path filePath = Paths.get("src/main/resources/2023/D19.txt");
+        Path filePath = Paths.get("../advent-of-code-input/2023/D19.txt");
         List<String> rows = new ArrayList<String>();
         try {
             rows = Files.readAllLines(filePath, StandardCharsets.UTF_8);

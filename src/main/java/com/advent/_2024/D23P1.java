@@ -14,7 +14,7 @@ public class D23P1 {
 
     public static void main(String[] args) {
         long startTime = System.currentTimeMillis();
-        Path filePath = Paths.get("src/main/resources/2024/D23.txt");
+        Path filePath = Paths.get("../advent-of-code-input/2024/D23.txt");
         List<String> tPairs = new ArrayList<>();
         List<String> input = new ArrayList<>();
         try (Stream<String> lines = Files.lines(filePath, StandardCharsets.UTF_8)) {

@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 
 public class D03P2 {
     public static void main(String[] args) {
-        Path filePath = Paths.get("src/main/resources/2024/D03.txt");
+        Path filePath = Paths.get("../advent-of-code-input/2024/D03.txt");
         String input;
         try {
             input = String.join("", Files.readAllLines(filePath, StandardCharsets.UTF_8));

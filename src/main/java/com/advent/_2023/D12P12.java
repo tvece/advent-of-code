@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 public class D12P12 {
 
     public static void main(String[] args) {
-        Path filePath = Paths.get("src/main/resources/2023/D12.txt");
+        Path filePath = Paths.get("../advent-of-code-input/2023/D12.txt");
         long part1 = 0;
         long part2 = 0;
         Map<Input, Long> cache = new HashMap<>();

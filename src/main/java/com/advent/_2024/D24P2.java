@@ -27,7 +27,7 @@ public class D24P2 {
 
     public static void main(String[] args) {
         long startTime = System.currentTimeMillis();
-        Path filePath = Paths.get("src/main/resources/2024/D24.txt");
+        Path filePath = Paths.get("../advent-of-code-input/2024/D24.txt");
         List<String> input;
         try {
             input = Files.readAllLines(filePath, StandardCharsets.UTF_8);

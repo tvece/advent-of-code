@@ -19,7 +19,7 @@ public class D13P12 {
     private static final String BUTTON_B_PREFIX = "Button B: X";
 
     public static void main(String[] args) {
-        Path filePath = Paths.get("src/main/resources/2024/D13.txt");
+        Path filePath = Paths.get("../advent-of-code-input/2024/D13.txt");
         List<String> input;
         try {
             input = Files.readAllLines(filePath, StandardCharsets.UTF_8);

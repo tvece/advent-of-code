@@ -9,7 +9,7 @@ import java.nio.file.Paths;
 public class D15P1 {
 
     public static void main(String[] args) {
-        Path filePath = Paths.get("src/main/resources/2023/D15.txt");
+        Path filePath = Paths.get("../advent-of-code-input/2023/D15.txt");
         String row;
         try {
             row = Files.readAllLines(filePath, StandardCharsets.UTF_8).getFirst();

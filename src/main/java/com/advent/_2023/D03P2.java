@@ -13,7 +13,7 @@ import java.util.Map;
 public class D03P2 {
 
     public static void main(String[] args) {
-        Path filePath = Paths.get("src/main/resources/2023/D03.txt");
+        Path filePath = Paths.get("../advent-of-code-input/2023/D03.txt");
         List<String> lines;
         try {
             lines = Files.readAllLines(filePath, StandardCharsets.UTF_8);

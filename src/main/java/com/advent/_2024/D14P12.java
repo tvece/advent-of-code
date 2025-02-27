@@ -21,7 +21,7 @@ public class D14P12 {
     private static final boolean isPart1 = false;
 
     public static void main(String[] args) {
-        Path filePath = Paths.get("src/main/resources/2024/D14.txt");
+        Path filePath = Paths.get("../advent-of-code-input/2024/D14.txt");
         List<Robot> robots = new ArrayList<>();
         try (Stream<String> lines = Files.lines(filePath, StandardCharsets.UTF_8)) {
             lines.forEach(line -> {

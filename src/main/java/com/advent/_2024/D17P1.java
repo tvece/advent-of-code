@@ -18,7 +18,7 @@ public class D17P1 {
     String out = "";
 
     public static void main(String[] args) {
-        Path filePath = Paths.get("src/main/resources/2024/D17.txt");
+        Path filePath = Paths.get("../advent-of-code-input/2024/D17.txt");
         List<String> input;
         try {
             input = Files.readAllLines(filePath, StandardCharsets.UTF_8);

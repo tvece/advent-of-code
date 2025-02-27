@@ -11,7 +11,7 @@ import java.util.List;
 public class D06P2 {
 
     public static void main(String[] args) {
-        Path filePath = Paths.get("src/main/resources/2023/D06.txt");
+        Path filePath = Paths.get("../advent-of-code-input/2023/D06.txt");
         List<String> lines;
         try {
             lines = Files.readAllLines(filePath, StandardCharsets.UTF_8);

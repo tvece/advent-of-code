@@ -10,7 +10,7 @@ import java.util.List;
 public class D22P1 {
     public static void main(String[] args) {
         long startTime = System.currentTimeMillis();
-        Path filePath = Paths.get("src/main/resources/2024/D22.txt");
+        Path filePath = Paths.get("../advent-of-code-input/2024/D22.txt");
         List<String> input;
         try {
             input = Files.readAllLines(filePath, StandardCharsets.UTF_8);

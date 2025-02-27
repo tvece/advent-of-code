@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 public class D04P12 {
 
     public static void main(String[] args) {
-        Path filePath = Paths.get("src/main/resources/2023/D04.txt");
+        Path filePath = Paths.get("../advent-of-code-input/2023/D04.txt");
         try (Stream<String> lines = Files.lines(filePath, StandardCharsets.UTF_8)) {
             List<Integer> matches = new ArrayList<>(List.of(0));
             for (Iterator<String> it = lines.iterator(); it.hasNext(); ) {

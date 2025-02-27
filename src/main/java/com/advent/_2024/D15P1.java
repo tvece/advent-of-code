@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 
 public class D15P1 {
     public static void main(String[] args) {
-        Path filePath = Paths.get("src/main/resources/2024/D15.txt");
+        Path filePath = Paths.get("../advent-of-code-input/2024/D15.txt");
         List<char[]> map = new ArrayList<>();
         AtomicBoolean readingMap = new AtomicBoolean(true);
         StringBuilder instructionsBuilder = new StringBuilder();
